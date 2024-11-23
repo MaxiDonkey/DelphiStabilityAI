@@ -117,6 +117,59 @@ The name of each property is self-explanatory; if needed, refer to the internal 
 
 ## Stable Image Ultra
 
+**Stable Image Ultra** use the Diffusion 3.5 model. This method is distinguished by:
+
+- **Advanced Prompt Understanding:** Fine and precise analysis of descriptions, even complex ones.
+- **Typography Mastery:** Ability to integrate readable and aesthetically pleasing text elements.
+- **Complex Compositions:** Harmonious management of detailed, multi-element scenes.
+- **Dynamic Lighting:** Rendering of natural, dramatic, or artistic lighting effects.
+- **Vibrant Colors:** Rich palettes, dynamic nuances, and visual depth.
+- **Cohesion and Structure:** Creation of balanced, well-structured images with no inconsistencies.
+
+Asynchronous Code Example
+
+```Pascal
+//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Generate;
+
+  Stability.StableImage.Generate.ImageUltra(
+    procedure (Params: TStableImageUltra)
+    begin
+      Params.AspectRatio(ratio16x9);
+      Params.Prompt('Lighthouse on a cliff overlooking the ocean');
+      Params.OutputFormat(png);
+    end,
+    function : TAsynStableImage
+    begin
+      Result.Sender := Image1;
+
+      Result.OnStart :=
+        procedure (Sender: TObject)
+        begin
+          Cursor := crHourGlass;
+        end;
+
+      Result.OnSuccess :=
+        procedure (Sender: TObject; Image: TStableImage)
+        begin
+          var Stream := Image.GetStream;
+          try
+            Image.SaveToFile('lighthouse..png');
+            (Sender as TImage).Picture.LoadFromStream(Stream);
+          finally
+            Stream.Free;
+            Cursor := crDefault;
+          end;
+        end;
+
+      Result.OnError :=
+        procedure (Sender: TObject; Error: String)
+        begin
+          Memo1.Lines.Text := Memo1.Text + Error + sLineBreak;
+          Cursor := crDefault;
+        end;
+    end);
+```
+
 <br/>
 
 # Contributing
