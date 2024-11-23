@@ -9,10 +9,10 @@ ___
 <br/>
 
 - [Introduction](#Introduction)
-    - [Who is Stability.ai](#Who-is-Stability-ai)
+    - [Who is Stability.ai](#Who-is-Stability.ai)
     - [About this tutorial](#About-this-tutorial)
     - [Remarks](#remarks)
-- [Stability.ai console](#Stability-ai-console)
+- [Stability.ai console](#Stability.ai-console)
 - [Contributing](#contributing)
 - [License](#license)
 
