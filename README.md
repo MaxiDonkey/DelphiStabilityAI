@@ -18,7 +18,7 @@ ___
     - [Stable Image Ultra](#Stable-Image-Ultra)
 - [Contributing](#contributing)
 - [License](#license)
-    - [Asynchronous callback mode management](#Asynchronous-callback-mode-management)
+ 
 <br/>
 <br/>
 
