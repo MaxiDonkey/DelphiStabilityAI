@@ -140,6 +140,7 @@ The name of each property is self-explanatory; if needed, refer to the internal 
     end,
     function : TAsynStableImage
     begin
+      //Add a TImage on the form
       Result.Sender := Image1;
 
       Result.OnStart :=
@@ -161,6 +162,7 @@ The name of each property is self-explanatory; if needed, refer to the internal 
           end;
         end;
 
+      //Add a TMemo on the form
       Result.OnError :=
         procedure (Sender: TObject; Error: String)
         begin
