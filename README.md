@@ -14,7 +14,7 @@ ___
     - [Remarks](#remarks)
 - [Stability AI console](#Stability-AI-console)
 - [Usage](#Usage)
-    
+    - [Asynchronous callback mode management](#Asynchronous-callback-mode-management)
 - [Contributing](#contributing)
 - [License](#license)
     - [Asynchronous callback mode management](#Asynchronous-callback-mode-management)
