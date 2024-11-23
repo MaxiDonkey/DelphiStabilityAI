@@ -13,9 +13,11 @@ ___
     - [About this tutorial](#About-this-tutorial)
     - [Remarks](#remarks)
 - [Stability AI console](#Stability-AI-console)
+- [Usage](#Usage)
+    
 - [Contributing](#contributing)
 - [License](#license)
-
+    - [Asynchronous callback mode management](#Asynchronous-callback-mode-management)
 <br/>
 <br/>
 
@@ -85,6 +87,32 @@ Once you have a token, you can initialize `IStabilityAI` interface, which is an 
 > So, set `Stability := TStabilityAIFactory.CreateInstance(API_KEY);` in the `OnCreate` event of your application.
 ><br/> 
 >Where `Stability: IStabilityAI;`
+
+<br/>
+
+# Usage
+
+## Asynchronous callback mode management
+
+In the context of asynchronous methods, for a method that does not involve streaming, callbacks use the following generic record: `TAsynCallBack<T> = record` defined in the `StabilityAI.Async.Support.pas` unit. This record exposes the following properties:
+
+```Pascal
+   TAsynCallBack<T> = record
+   ... 
+       Sender: TObject;
+       OnStart: TProc<TObject>;
+       OnSuccess: TProc<TObject, T>;
+       OnError: TProc<TObject, string>; 
+```
+<br/>
+
+The name of each property is self-explanatory; if needed, refer to the internal documentation for more details.
+
+> [!NOTE]
+>In the rest of the tutorial, we will primarily use anonymous methods unless otherwise specified, as working with APIs requires it due to processing times that can sometimes be quite long.
+>
+
+<br/>
 
 # Contributing
 
