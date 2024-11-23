@@ -11,6 +11,7 @@ ___
 - [Introduction](#Introduction)
     - [Who is Stability.ai](#Who-is-Stability-ai)
     - [About this tutorial](#About-this-tutorial)
+    - [Remarks](#remarks)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -52,6 +53,13 @@ This project provides a Delphi wrapper for integrating `Stability.ai’s` APIs i
 The documentation begins with the most recent models and their features, gradually covering earlier versions to show the progression of the technology. While features from the initial API versions remain available, they may be deprecated over time, and the latest versions are recommended for future-proof integration.
 
 <br/>
+
+## Remarks
+
+> [!IMPORTANT]
+>
+> This is an unofficial library. **Stability.ai** does not provide any official library for `Delphi`.
+> This repository contains `Delphi` implementation over [Stability.ai](https://platform.stability.ai/docs/api-reference/) public API.
 
 # Contributing
 
