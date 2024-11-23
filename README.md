@@ -15,6 +15,7 @@ ___
 - [Stability AI console](#Stability-AI-console)
 - [Usage](#Usage)
     - [Asynchronous callback mode management](#Asynchronous-callback-mode-management)
+    - [Stable Image Ultra](#Stable-Image-Ultra)
 - [Contributing](#contributing)
 - [License](#license)
     - [Asynchronous callback mode management](#Asynchronous-callback-mode-management)
@@ -111,6 +112,10 @@ The name of each property is self-explanatory; if needed, refer to the internal 
 > [!NOTE]
 >In the rest of the tutorial, we will primarily use anonymous methods unless otherwise specified, as working with APIs requires it due to processing times that can sometimes be quite long.
 >
+
+<br/>
+
+## Stable Image Ultra
 
 <br/>
 
