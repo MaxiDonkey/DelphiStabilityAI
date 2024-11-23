@@ -126,7 +126,7 @@ The name of each property is self-explanatory; if needed, refer to the internal 
 - **Vibrant Colors:** Rich palettes, dynamic nuances, and visual depth.
 - **Cohesion and Structure:** Creation of balanced, well-structured images with no inconsistencies.
 
-Asynchronous Code Example
+**Asynchronous Code Example**
 
 ```Pascal
 //uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Generate;
