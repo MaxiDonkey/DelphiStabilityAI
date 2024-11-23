@@ -70,6 +70,21 @@ You can access the [Stability.ai console](https://platform.stability.ai/) to exp
 
 To obtain an API key, you need to create an account. A credit of 25 will be granted to you, and an initial key will be automatically generated. You can find this key [here](https://platform.stability.ai/account/keys).
 
+Once you have a token, you can initialize `IStabilityAI` interface, which is an entry point to the API.
+
+> [!NOTE]
+>```Pascal
+>uses StabilityAI;
+>
+>var Stability := TStabilityAIFactory.CreateInstance(API_KEY);
+>```
+
+>[!Warning]
+> To use the examples provided in this tutorial, especially to work with asynchronous methods, I recommend defining the stability interface with the widest possible scope.
+><br/>
+> So, set `Stability := TStabilityAIFactory.CreateInstance(API_KEY);` in the `OnCreate` event of your application.
+><br/> 
+>Where `Stability: IStabilityAI;`
 
 # Contributing
 
