@@ -16,6 +16,8 @@ ___
 - [Usage](#Usage)
     - [Asynchronous callback mode management](#Asynchronous-callback-mode-management)
     - [Stable Image Ultra](#Stable-Image-Ultra)
+        - [Text to image](#Text-to-image)
+        - [Image & text to image](#Image-&-text-to-image)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -126,6 +128,8 @@ The name of each property is self-explanatory; if needed, refer to the internal 
 - **Vibrant Colors:** Rich palettes, dynamic nuances, and visual depth.
 - **Cohesion and Structure:** Creation of balanced, well-structured images with no inconsistencies.
 
+### Text to image
+
 **Asynchronous Code Example**
 
 ```Pascal
@@ -174,6 +178,8 @@ The name of each property is self-explanatory; if needed, refer to the internal 
     end);
 ```
 Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Generate/paths/~1v2beta~1stable-image~1generate~1ultra/post)
+
+### Image & text to image
 
 It is also possible to provide a reference image to use as a starting point for generation. In this case, the `strength` parameter must be specified, as it determines the influence of the input image on the final output. A `strength` value of 0 will produce an image identical to the input, while a value of 1 indicates no influence from the initial image.
 
