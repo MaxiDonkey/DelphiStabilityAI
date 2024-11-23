@@ -136,6 +136,8 @@ The name of each property is self-explanatory; if needed, refer to the internal 
     begin
       Params.AspectRatio(ratio16x9);
       Params.Prompt('Lighthouse on a cliff overlooking the ocean');
+      //A blurb of text describing what you do not wish to see in the output image.
+      //Params.NegativePrompt('...')
       Params.OutputFormat(png);
     end,
     function : TAsynStableImage
