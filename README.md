@@ -12,6 +12,7 @@ ___
     - [Who is Stability.ai](#Who-is-Stability-ai)
     - [About this tutorial](#About-this-tutorial)
     - [Remarks](#remarks)
+- [Stability.ai console](#Stability-ai-console)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -60,6 +61,15 @@ The documentation begins with the most recent models and their features, gradual
 >
 > This is an unofficial library. **Stability.ai** does not provide any official library for `Delphi`.
 > This repository contains `Delphi` implementation over [Stability.ai](https://platform.stability.ai/docs/api-reference/) public API.
+
+<br/>
+
+# Stability.ai console
+
+You can access the [Stability.ai console](https://platform.stability.ai/) to explore the available possibilities.
+
+To obtain an API key, you need to create an account. A credit of 25 will be granted to you, and an initial key will be automatically generated. You can find this key [here](https://platform.stability.ai/account/keys).
+
 
 # Contributing
 
