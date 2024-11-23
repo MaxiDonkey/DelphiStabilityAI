@@ -9,10 +9,10 @@ ___
 <br/>
 
 - [Introduction](#Introduction)
-    - [Who is Stability.ai](#Who-is-Stability.ai)
+    - [Who is Stability AI](#Who-is-Stability-AI)
     - [About this tutorial](#About-this-tutorial)
     - [Remarks](#remarks)
-- [Stability.ai console](#Stability.ai-console)
+- [Stability AI console](#Stability-AI-console)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -21,7 +21,7 @@ ___
 
 # Introduction
 
-## Who is Stability.ai
+## Who is Stability AI
 
 `Stability.ai` is a well-established organization in artificial intelligence, known for its models that generate images and text from descriptions. Below is a summary of the key models they have developed, presented in chronological order of release:
 
@@ -64,7 +64,7 @@ The documentation begins with the most recent models and their features, gradual
 
 <br/>
 
-# Stability.ai console
+# Stability AI console
 
 You can access the [Stability.ai console](https://platform.stability.ai/) to explore the available possibilities.
 
