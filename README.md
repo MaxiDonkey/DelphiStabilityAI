@@ -188,12 +188,16 @@ To simplify the example codes provided in this tutorial, I have included two uni
 
 >[!TIP]
 >```Pascal
+>//uses VCL.Stability.Tutorial;
+>
 >  StabilitySender := TVCLStabilitySender.Create(Memo1, Image1);
 >```
 >
 >or
 >
 >```Pascal
+>//uses FMX.Stability.Tutorial;
+>
 >  StabilitySender := TFMXStabilitySender.Create(Memo1, Image1);
 >```
 >
