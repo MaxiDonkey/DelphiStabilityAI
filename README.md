@@ -557,6 +557,32 @@ Tools to Enhance the Size and Resolution of Your Images
 
 ## Conservative
 
+Accepts images ranging in size from 64x64 pixels up to 1 megapixel and enhances their resolution to 4K. More broadly, it can upscale images by approximately 20 to 40 times while maintaining their original details. The Conservative Upscale option focuses on preserving the image's integrity with minimal modifications and is not intended for reinterpreting the image's content.
+
+**Asynchronous Code Example**
+
+```Pascal
+
+  StabilityResult.FileName := 'Upscalelighthouse1.png';
+
+  Stability.StableImage.Upscale.Conservative(
+    procedure (Params: TUpscaleConservative)
+    begin
+      Params.Image('lighthouse.png');
+      Params.Prompt('The light house');
+      Params.OutputFormat(png);
+    end,
+    function : TAsynStableImage
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Upscale/paths/~1v2beta~1stable-image~1upscale~1conservative/post)
+
 <br/>
 
 # Contributing
