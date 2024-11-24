@@ -186,15 +186,17 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
 
 To simplify the example codes provided in this tutorial, I have included two units in the source code: `VCL.Stability.Tutorial` and `FMX.Stability.Tutorial`. Depending on the option you choose to test the provided source code, you will need to instantiate either the `TVCLStabilitySender` or `TFMXStabilitySender` class in the application's `OnCreate` event, as follows:
 
-```Pascal
-  StabilitySender := TVCLStabilitySender.Create(Memo1, Image1);
-```
-
-or
-
-```Pascal
-  StabilitySender := TFMXStabilitySender.Create(Memo1, Image1);
-```
+>[!TIP]
+>```Pascal
+>  StabilitySender := TVCLStabilitySender.Create(Memo1, Image1);
+>```
+>
+>or
+>
+>```Pascal
+>  StabilitySender := TFMXStabilitySender.Create(Memo1, Image1);
+>```
+>
 
 Make sure to add a `TMemo` and a `TImage` component to your form beforehand.
 
