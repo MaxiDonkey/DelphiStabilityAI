@@ -17,6 +17,7 @@ ___
     - [Asynchronous callback mode management](#Asynchronous-callback-mode-management)
     - [Stable Image Ultra](#Stable-Image-Ultra)
         - [Text to image](#Text-to-image)
+        - [Tools for simplifying this tutorial](#Tools-for-simplifying-this-tutorial)
         - [Image and text to image](#Image-and-text-to-image)
 - [Contributing](#contributing)
 - [License](#license)
@@ -130,6 +131,12 @@ The name of each property is self-explanatory; if needed, refer to the internal 
 
 ### Text to image
 
+In the examples below, we will apply these procedures to make things simpler.
+
+>[!TIP]
+>```Pascal
+>```
+
 **Asynchronous Code Example**
 
 ```Pascal
@@ -178,6 +185,12 @@ The name of each property is self-explanatory; if needed, refer to the internal 
     end);
 ```
 Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Generate/paths/~1v2beta~1stable-image~1generate~1ultra/post)
+
+<br/>
+
+### Tools for simplifying this tutorial
+
+<br/>
 
 ### Image and text to image
 
