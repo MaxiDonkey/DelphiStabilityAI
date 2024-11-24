@@ -496,6 +496,39 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
 **Adjusting the Degree of Transformation**
 - To retain approximately 35% of the original image in the final output, you can use either of these approaches: set `init_image_mode=IMAGE_STRENGTH` with `image_strength=0.35`, or use `init_image_mode=STEP_SCHEDULE` with `step_schedule_start=0.65`. Both methods yield similar results, but the `step_schedule` mode offers additional flexibility by allowing you to specify a `step_schedule_end` value, giving more nuanced control if needed. For further details, refer to the specific parameter descriptions below.
 
+**Asynchronous Code Example**
+
+```Pascal
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Generate, 
+//  StabilityAI.Version1.SDXL1AndSD1_6, FMX.Stability.Tutorial; 
+
+  StabilityResult.FileName := 'lighthouse7.png';
+
+  Stability.Version1.SDXLAndSDL.ImageToImageWithPrompt('stable-diffusion-v1-6',
+    procedure (Params: TPayloadPrompt)
+    begin
+      Params.TextPrompts([TPromptMultipart.New(1, 'A dog space commander') ]);
+      Params.InitImage('lighthouse6.png');
+      Params.ImageStrength(0.45);
+      Params.CfgScale(7);
+      Params.Sampler(TSamplerType.K_DPMPP_2S_ANCESTRAL);
+      Params.Samples(3);
+      Params.Steps(30);
+    end,
+    function : TAsynArtifacts
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+>[!NOTE]
+> In our code example, the value of the Samples parameter is 3, which means that three images were generated. Only the first one is displayed. The other two were saved with indexed file names as follows: lighthouse701.png and lighthouse702.png.
+>
+
 <br/>
 
 # Upscale
