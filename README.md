@@ -30,6 +30,7 @@ ___
         - [Image to image with prompt](#Image-to-image-with-prompt)
         - [Image to image with mask](#Image-to-image-with-mask)
 - [Upscale](#Upscale)
+    - [Creative](#Creative)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -547,10 +548,14 @@ Tools to Enhance the Size and Resolution of Your Images
 - Designed for heavily degraded images (less than 1 megapixel), this service applies a creative approach to generate high-resolution outputs with a unique touch.
 
 **Fast Upscaler**
-- Boost image resolution by 4x in just about a second with predictive and generative AI. This quick and efficient tool is perfect for improving the quality of compressed images, making it a great choice for social media posts and other similar uses.
+- This quick and efficient tool is perfect for improving the quality of compressed images, making it a great choice for social media posts and other similar uses.
 
 **Conservative Upscaler**
 - Upscale images by 20 to 40 times while preserving their original appearance, delivering outputs up to 4 megapixels. This tool works effectively even with images as small as 64x64 pixels, directly scaling them up to 4 megapixels. Choose this option when you need a straightforward 4-megapixel result.
+
+<br/>
+
+## Creative
 
 <br/>
 
