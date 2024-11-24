@@ -190,6 +190,20 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
 
 ### Tools for simplifying this tutorial
 
+To simplify the example codes provided in this tutorial, I have included two units in the source code: `VCL.Stability.Tutorial` and `FMX.Stability.Tutorial`. Depending on the option you choose to test the provided source code, you will need to instantiate either the `TVCLStabilitySender` or `TFMXStabilitySender` class in the application's `OnCreate` event, as follows:
+
+```Pascal
+  StabilitySender := TVCLStabilitySender.Create(Memo1, Image1);
+```
+
+or
+
+```Pascal
+  StabilitySender := TFMXStabilitySender.Create(Memo1, Image1);
+```
+
+Make sure to add a `TMemo` and a `TImage` component to your form beforehand.
+
 <br/>
 
 ### Image and text to image
@@ -197,48 +211,24 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
 It is also possible to provide a reference image to use as a starting point for generation. In this case, the `strength` parameter must be specified, as it determines the influence of the input image on the final output. A `strength` value of 0 will produce an image identical to the input, while a value of 1 indicates no influence from the initial image.
 
 ```Pascal
-//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Generate;
+//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Generate; FMX.Stability.Tutorial;
 
+  StabilitySender.FileName := 'lighthouse1.png';
   Stability.StableImage.Generate.ImageUltra(
     procedure (Params: TStableImageUltra)
     begin
       Params.AspectRatio(ratio16x9);
       Params.Prompt('There are many birds in the sky');
       Params.Image('lighthouse.png');
-      Params.Strength(0.4);
+      Params.Strength(0.3);
       Params.OutputFormat(png);
     end,
     function : TAsynStableImage
     begin
-      //Add a TImage on the form
-      Result.Sender := Image1;
-
-      Result.OnStart :=
-        procedure (Sender: TObject)
-        begin
-          Cursor := crHourGlass;
-        end;
-
-      Result.OnSuccess :=
-        procedure (Sender: TObject; Image: TStableImage)
-        begin
-          var Stream := Image.GetStream;
-          try
-            Image.SaveToFile('lighthouseModified.png');
-            (Sender as TImage).Picture.LoadFromStream(Stream);
-          finally
-            Stream.Free;
-            Cursor := crDefault;
-          end;
-        end;
-
-      //Add a TMemo on the form
-      Result.OnError :=
-        procedure (Sender: TObject; Error: String)
-        begin
-          Memo1.Lines.Text := Memo1.Text + Error + sLineBreak;
-          Cursor := crDefault;
-        end;
+      Result.Sender := StabilitySender;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
     end);
 ```
 
