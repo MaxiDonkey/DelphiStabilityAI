@@ -27,6 +27,7 @@ ___
         - [Generating with a prompt and an image](#Generating-with-a-prompt-and-an-image)
         - [Optional Parameters](#Optional-Parameters)
     - [SDXL and SD version 1](#SDXL-and-SD-version-1)
+        - [Text to image](#Text-to-image)
 - [Upscale](#Upscale)
 - [Contributing](#contributing)
 - [License](#license)
@@ -431,7 +432,9 @@ Both modes allow the use of these optional parameters:
 
 <br/>
 
-### SDXL and SD version 1
+## SDXL and SD version 1
+
+### Text to image
 
 **Using SDXL 1.0:** Use `stable-diffusion-xl-1024-v1-0` as the `engine_id` for your request, and specify the dimensions (`height` and `width`) with one of the following combinations:
 - **1024x1024** (default)
