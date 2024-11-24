@@ -131,12 +131,6 @@ The name of each property is self-explanatory; if needed, refer to the internal 
 
 ### Text to image
 
-In the examples below, we will apply these procedures to make things simpler.
-
->[!TIP]
->```Pascal
->```
-
 **Asynchronous Code Example**
 
 ```Pascal
