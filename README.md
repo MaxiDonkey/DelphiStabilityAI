@@ -19,6 +19,7 @@ ___
         - [Text to image](#Text-to-image)
         - [Tools for simplifying this tutorial](#Tools-for-simplifying-this-tutorial)
         - [Image and text to image](#Image-and-text-to-image)
+    - [Stable Image Core](#Stable-Image-Core)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -232,6 +233,10 @@ It is also possible to provide a reference image to use as a starting point for 
       Result.OnError := Display;
     end);
 ```
+
+<br/>
+
+## Stable Image Core
 
 <br/>
 
