@@ -287,6 +287,8 @@ It is also possible to provide a reference image to use as a starting point for 
     end);
 ```
 
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Generate/paths/~1v2beta~1stable-image~1generate~1core/post)
+
 <br>
 
 ### Using a preset style
