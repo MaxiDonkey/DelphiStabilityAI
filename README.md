@@ -20,6 +20,8 @@ ___
         - [Tools for simplifying this tutorial](#Tools-for-simplifying-this-tutorial)
         - [Image and text to image](#Image-and-text-to-image)
     - [Stable Image Core](#Stable-Image-Core)
+        - [Image Core Create](#Image-Core-Create)
+        - [Using a preset style](#Using-a-preset-style )
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -260,6 +262,8 @@ It is also possible to provide a reference image to use as a starting point for 
 
 <br/>
 
+### Image Core Create
+
 **Asynchronous Code Example**
 
 ```Pascal
@@ -284,6 +288,8 @@ It is also possible to provide a reference image to use as a starting point for 
 ```
 
 <br>
+
+### Using a preset style
 
 You can guide the image model toward a specific style by selecting from 17 available styles.
 
