@@ -703,6 +703,15 @@ type
   /// </remarks>
   TAsynArtifacts = TAsynCallBack<TArtifacts>;
 
+  /// <summary>
+  /// Represents the primary class for interacting with Version 1 routes of the StabilityAI API.
+  /// </summary>
+  /// <remarks>
+  /// This class provides a set of methods for generating images using Stable Diffusion models.
+  /// The supported operations include text-to-image generation, image-to-image modification with prompts, and masked image editing.
+  /// It supports both synchronous and asynchronous calls, allowing for flexibility in different application scenarios.
+  /// Each method allows parameter customization to control the output, including model selection, prompt definitions, image dimensions, and sampling options.
+  /// </remarks>
   TVersion1Route = class(TStabilityAIAPIRoute)
     /// <summary>
     /// VERSION 1: Generate an image from a text prompt.
