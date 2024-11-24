@@ -25,6 +25,7 @@ ___
     - [Stable Diffusion](#Stable-Diffusion)
         - [Generating with a prompt](#Generating-with-a-prompt)
         - [Generating with a prompt and an image](#Generating-with-a-prompt-and-an-image)
+        - [Optional Parameters](#Optional-Parameters)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -410,6 +411,21 @@ This method generates an image based on text input while using an existing image
       Result.OnError := Display;
     end);
 ```
+
+>[!NOTE]
+> Note: maximum request size is 10MiB.
+>
+
+<br/>
+
+### Optional Parameters
+
+Both modes allow the use of these optional parameters:
+- `model`: Specifies the model to utilize, such as **SD3 Large**, **SD3 Large Turbo**, or **SD3 Medium**.
+- `output_format`: Determines the desired format of the resulting image.
+- `seed`: Sets the randomness seed for the generation process.
+- `negative_prompt`: Defines keywords to exclude from the generated image.
+- `cfg_scale`: Adjusts the level of adherence to the prompt text during the diffusion process.
 
 <br/>
 
