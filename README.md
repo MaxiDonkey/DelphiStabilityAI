@@ -454,7 +454,7 @@ To use this model, set `stable-diffusion-v1-6` as the `engine_id` in your reques
 - Each dimension must be at least 320 pixels.
 - No dimension can exceed 1536 pixels.
 - Dimensions must be in increments of 64.
-- The default resolution is 512 x 512 pixels.
+- The default resolution is 1024 x 1024 pixels.
 
 <br/>
 
