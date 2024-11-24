@@ -11,6 +11,7 @@ uses
 type
   TVCLStabilitySender = class
   private
+    FId: string;
     FMemo: TMemo;
     FImage: TImage;
     FFileName: string;
@@ -25,6 +26,7 @@ type
   procedure Display(Sender: TObject; Value: string); overload;
   procedure Display(Sender: TObject; Result: TStableImage); overload;
   procedure Display(Sender: TObject; Result: TArtifacts); overload;
+  procedure Display(Sender: TObject; Value: TResults); overload;
 
 var
   StabilityResult: TVCLStabilitySender;
@@ -68,6 +70,18 @@ begin
   finally
     Stream.Free;
   end;
+end;
+
+procedure Display(Sender: TObject; Value: TResults); overload;
+begin
+  if not Value.Id.IsEmpty then
+    begin
+      Display(Sender, Value.Id);
+    end
+  else
+    begin
+      Display(Sender, Value as TStableImage);
+    end;
 end;
 
 

@@ -128,8 +128,8 @@ type
     function Conservative(ParamProc: TProc<TUpscaleConservative>): TStableImage; overload;
     procedure Conservative(ParamProc: TProc<TUpscaleConservative>; CallBacks: TFunc<TAsynStableImage>); overload;
 
-    function Creative(ParamProc: TProc<TUpscaleCreative>): TStableImage; overload;
-    procedure Creative(ParamProc: TProc<TUpscaleCreative>; CallBacks: TFunc<TAsynStableImage>); overload;
+    function Creative(ParamProc: TProc<TUpscaleCreative>): TResults; overload;
+    procedure Creative(ParamProc: TProc<TUpscaleCreative>; CallBacks: TFunc<TAsynResults>); overload;
 
     function Fast(ParamProc: TProc<TUpscaleFast>): TStableImage; overload;
     procedure Fast(ParamProc: TProc<TUpscaleFast>; CallBacks: TFunc<TAsynStableImage>); overload;
@@ -219,16 +219,16 @@ begin
 end;
 
 procedure TUpscaleRoute.Creative(ParamProc: TProc<TUpscaleCreative>;
-  CallBacks: TFunc<TAsynStableImage>);
+  CallBacks: TFunc<TAsynResults>);
 begin
-  with TAsynCallBackExec<TAsynStableImage, TStableImage>.Create(CallBacks) do
+  with TAsynCallBackExec<TAsynResults, TResults>.Create(CallBacks) do
   try
     Sender := Use.Param.Sender;
     OnStart := Use.Param.OnStart;
     OnSuccess := Use.Param.OnSuccess;
     OnError := Use.Param.OnError;
     Run(
-      function: TStableImage
+      function: TResults
       begin
         Result := Self.Creative(ParamProc);
       end);
@@ -261,9 +261,9 @@ begin
   Result := API.PostForm<TStableImage, TUpscaleConservative>('v2beta/stable-image/upscale/conservative', ParamProc);
 end;
 
-function TUpscaleRoute.Creative(ParamProc: TProc<TUpscaleCreative>): TStableImage;
+function TUpscaleRoute.Creative(ParamProc: TProc<TUpscaleCreative>): TResults;
 begin
-  Result := API.PostForm<TStableImage, TUpscaleCreative>('v2beta/stable-image/upscale/creative', ParamProc);
+  Result := API.PostForm<TResults, TUpscaleCreative>('v2beta/stable-image/upscale/creative', ParamProc);
 end;
 
 function TUpscaleRoute.Fast(ParamProc: TProc<TUpscaleFast>): TStableImage;

@@ -536,6 +536,7 @@ begin
   FUpscaleRoute.Free;
   FEditRoute.Free;
   FControlRoute.Free;
+  FResultsRoute.Free;
   inherited;
 end;
 
