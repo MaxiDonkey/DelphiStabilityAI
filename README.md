@@ -13,7 +13,7 @@ ___
     - [About this tutorial](#About-this-tutorial)
     - [Remarks](#remarks)
 - [Stability AI console](#Stability-AI-console)
-- [Usage](#Usage)
+- [Generate](#Generate)
     - [Asynchronous callback mode management](#Asynchronous-callback-mode-management)
     - [Stable Image Ultra](#Stable-Image-Ultra)
         - [Text to image](#Text-to-image)
@@ -101,7 +101,7 @@ Once you have a token, you can initialize `IStabilityAI` interface, which is an 
 
 <br/>
 
-# Usage
+# Generate
 
 ## Asynchronous callback mode management
 
