@@ -433,6 +433,26 @@ Both modes allow the use of these optional parameters:
 
 ### SDXL and SD version 1
 
+**Using SDXL 1.0:** Use `stable-diffusion-xl-1024-v1-0` as the `engine_id` for your request, and specify the dimensions (`height` and `width`) with one of the following combinations:
+- **1024x1024** (default)
+- **1152x896**
+- **896x1152**
+- **1216x832**
+- **1344x768**
+- **768x1344**
+- **1536x640**
+- **640x1536**
+
+<br/>
+
+**Using SD 1.6**: SD 1.6 is a flexible-resolution base model designed for generating images with non-standard aspect ratios. The model is optimized for a resolution of 512 x 512 pixels. To create outputs with a resolution of 1 megapixel, we recommend using SDXL 1.0, which is available at the same price.
+
+To use this model, set `stable-diffusion-v1-6` as the `engine_id` in your request and ensure the `height` and `width` meet the following requirements:
+- Each dimension must be at least 320 pixels.
+- No dimension can exceed 1536 pixels.
+- Dimensions must be in increments of 64.
+- The default resolution is 512 x 512 pixels.
+
 <br/>
 
 # Upscale
