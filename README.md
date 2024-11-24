@@ -529,7 +529,12 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
 
 ### Image to image with mask
 
+Modify specific parts of an image using a mask. The mask must match the dimensions and shape of the original image. This functionality also supports images with alpha channels. 
 
+use the métode:
+```Pascal
+  ImageToImageWithMask(const Model: string; ParamProc: TProc<TPayloadMask>; CallBacks: TFunc<TAsynArtifacts>);
+```
 
 <br/>
 
