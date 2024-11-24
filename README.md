@@ -486,6 +486,8 @@ To use this model, set `stable-diffusion-v1-6` as the `engine_id` in your reques
       Result.OnError := Display;
     end);
 ```
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/SDXL-1.0-and-SD1.6/operation/textToImage)
+
 
 # Upscale
 
