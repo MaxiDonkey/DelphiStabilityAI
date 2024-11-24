@@ -29,6 +29,7 @@ ___
     - [SDXL and SD version 1](#SDXL-and-SD-version-1)
         - [Text to image prompting](#Text-to-image-prompting)
         - [Image to image with prompt](#Image-to-image-with-prompt)
+        - [Image to image with mask](#Image-to-image-with-mask)
 - [Upscale](#Upscale)
 - [Contributing](#contributing)
 - [License](#license)
@@ -525,9 +526,17 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
     end);
 ```
 
->[!NOTE]
+>[!TIP]
 > In our code example, the value of the Samples parameter is 3, which means that three images were generated. Only the first one is displayed. The other two were saved with indexed file names as follows: lighthouse701.png and lighthouse702.png.
 >
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/SDXL-1.0-and-SD1.6/operation/imageToImage)
+
+<br/>
+
+### Image to image with mask
+
+
 
 <br/>
 
