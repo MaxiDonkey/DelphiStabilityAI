@@ -704,15 +704,304 @@ type
   TAsynArtifacts = TAsynCallBack<TArtifacts>;
 
   TVersion1Route = class(TStabilityAIAPIRoute)
+    /// <summary>
+    /// VERSION 1: Generate an image from a text prompt.
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="Model">
+    /// Id of the model to use for creation job
+    /// <para>
+    /// Enum: SDXL 1.0 <c>stable-diffusion-xl-1024-v1-0</c>, SD 1.6 <c>stable-diffusion-v1-6</c>
+    /// </para>
+    /// </param>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, keywords of what you do not wish to see in the output image, etc.
+    /// </param>
+    /// <returns>
+    /// Returns a <c>TArtifacts</c> object that contains image base-64 generated (image/png).
+    /// </returns>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// The <c>TextToImage</c> method sends a image creation request and waits for the full response. The returned <c>TArtifacts</c> object contains the model's generated response, including multiple choices if available.
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Image := Stability.Version1.SDXLAndSDL.TextToImage(Model,
+    ///     procedure (Params: TPayload)
+    ///     begin
+    ///       // Move on to the other parameters.
+    ///     end);
+    ///   var Stream := Image.Artifacts[0].GetStream;
+    ///   try
+    ///     //--- Save image
+    ///     Image.SaveToFile(FileName);
+    ///     //--- Display image
+    ///     Image1.Picture.LoadFromStream(Stream);
+    ///   finally
+    ///     Image.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
     function TextToImage(const Model: string; ParamProc: TProc<TPayload>): TArtifacts; overload;
+    /// <summary>
+    /// VERSION 1: Generate an image from a text prompt.
+    /// <para>
+    /// NOTE: This method is <c>asynchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="Model">
+    /// Id of the model to use for creation job
+    /// <para>
+    /// Enum: SDXL 1.0 <c>stable-diffusion-xl-1024-v1-0</c>, SD 1.6 <c>stable-diffusion-v1-6</c>
+    /// </para>
+    /// </param>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, keywords of what you do not wish to see in the output image, the the format of the output image, etc.
+    /// </param>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// This procedure initiates an asynchronous request to generate an image creation based on the provided parameters. The response or error is handled by the provided callBacks.
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.Version1.SDXLAndSDL.TextToImage(Model,
+    ///   procedure (Params: TPayload)
+    ///   begin
+    ///     // Define parameters
+    ///   end,
+    ///
+    ///   function : TAsynArtifacts
+    ///   begin
+    ///     Result.Sender := Image1;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Image: TArtifacts)
+    ///       begin
+    ///         // Handle success operation
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
     procedure TextToImage(const Model: string; ParamProc: TProc<TPayload>;
       CallBacks: TFunc<TAsynArtifacts>); overload;
-
+    /// <summary>
+    /// VERSION 1: Produce an image from an existing image using a text prompt.
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="Model">
+    /// Id of the model to use for creation job
+    /// <para>
+    /// Enum: SDXL 1.0 <c>stable-diffusion-xl-1024-v1-0</c>, SD 1.6 <c>stable-diffusion-v1-6</c>
+    /// </para>
+    /// </param>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, keywords of what you do not wish to see in the output image, etc.
+    /// </param>
+    /// <returns>
+    /// Returns a <c>TArtifacts</c> object that contains image base-64 generated (image/png).
+    /// </returns>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// The <c>ImageToImageWithPrompt</c> method sends a image creation request and waits for the full response. The returned <c>TArtifacts</c> object contains the model's generated response, including multiple choices if available.
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Image := Stability.Version1.SDXLAndSDL.ImageToImageWithPrompt(Model,
+    ///     procedure (Params: TPayloadPrompt)
+    ///     begin
+    ///       // Move on to the other parameters.
+    ///     end);
+    ///   var Stream := Image.Artifacts[0].GetStream;
+    ///   try
+    ///     //--- Save image
+    ///     Image.SaveToFile(FileName);
+    ///     //--- Display image
+    ///     Image1.Picture.LoadFromStream(Stream);
+    ///   finally
+    ///     Image.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
     function ImageToImageWithPrompt(const Model: string; ParamProc: TProc<TPayloadPrompt>): TArtifacts; overload;
+    /// <summary>
+    /// VERSION 1: Produce an image from an existing image using a text prompt.
+    /// <para>
+    /// NOTE: This method is <c>asynchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="Model">
+    /// Id of the model to use for creation job
+    /// <para>
+    /// Enum: SDXL 1.0 <c>stable-diffusion-xl-1024-v1-0</c>, SD 1.6 <c>stable-diffusion-v1-6</c>
+    /// </para>
+    /// </param>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, keywords of what you do not wish to see in the output image, the the format of the output image, etc.
+    /// </param>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// This procedure initiates an asynchronous request to generate an image creation based on the provided parameters. The response or error is handled by the provided callBacks.
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.Version1.SDXLAndSDL.ImageToImageWithPrompt(Model,
+    ///   procedure (Params: TPayloadPrompt)
+    ///   begin
+    ///     // Define parameters
+    ///   end,
+    ///
+    ///   function : TAsynArtifacts
+    ///   begin
+    ///     Result.Sender := Image1;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Image: TArtifacts)
+    ///       begin
+    ///         // Handle success operation
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
     procedure ImageToImageWithPrompt(const Model: string; ParamProc: TProc<TPayloadPrompt>;
       CallBacks: TFunc<TAsynArtifacts>); overload;
-
+    /// <summary>
+    /// VERSION 1: Selectively modify portions of an image using a <c>mask</c>. The mask must be the same shape and size as the init <c>image</c>. This endpoint also supports image parameters with alpha channels. See below for more details.
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="Model">
+    /// Id of the model to use for creation job
+    /// <para>
+    /// Enum: SDXL 1.0 <c>stable-diffusion-xl-1024-v1-0</c>, SD 1.6 <c>stable-diffusion-v1-6</c>
+    /// </para>
+    /// </param>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, keywords of what you do not wish to see in the output image, etc.
+    /// </param>
+    /// <returns>
+    /// Returns a <c>TArtifacts</c> object that contains image base-64 generated (image/png).
+    /// </returns>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// The <c>ImageToImageWithMask</c> method sends a image creation request and waits for the full response. The returned <c>TArtifacts</c> object contains the model's generated response, including multiple choices if available.
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Image := Stability.Version1.SDXLAndSDL.ImageToImageWithMask(Model,
+    ///     procedure (Params: TPayloadMask)
+    ///     begin
+    ///       // Move on to the other parameters.
+    ///     end);
+    ///   var Stream := Image.Artifacts[0].GetStream;
+    ///   try
+    ///     //--- Save image
+    ///     Image.SaveToFile(FileName);
+    ///     //--- Display image
+    ///     Image1.Picture.LoadFromStream(Stream);
+    ///   finally
+    ///     Image.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
     function ImageToImageWithMask(const Model: string; ParamProc: TProc<TPayloadMask>): TArtifacts; overload;
+    /// <summary>
+    /// VERSION 1: Selectively modify portions of an image using a <c>mask</c>. The mask must be the same shape and size as the init <c>image</c>. This endpoint also supports image parameters with alpha channels. See below for more details.
+    /// <para>
+    /// NOTE: This method is <c>asynchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="Model">
+    /// Id of the model to use for creation job
+    /// <para>
+    /// Enum: SDXL 1.0 <c>stable-diffusion-xl-1024-v1-0</c>, SD 1.6 <c>stable-diffusion-v1-6</c>
+    /// </para>
+    /// </param>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, keywords of what you do not wish to see in the output image, the the format of the output image, etc.
+    /// </param>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// This procedure initiates an asynchronous request to generate an image creation based on the provided parameters. The response or error is handled by the provided callBacks.
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.Version1.SDXLAndSDL.ImageToImageWithMask(Model,
+    ///   procedure (Params: TPayloadMask)
+    ///   begin
+    ///     // Define parameters
+    ///   end,
+    ///
+    ///   function : TAsynArtifacts
+    ///   begin
+    ///     Result.Sender := Image1;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Image: TArtifacts)
+    ///       begin
+    ///         // Handle success operation
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
     procedure ImageToImageWithMask(const Model: string; ParamProc: TProc<TPayloadMask>;
       CallBacks: TFunc<TAsynArtifacts>); overload;
   end;
