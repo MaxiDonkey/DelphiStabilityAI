@@ -23,6 +23,8 @@ ___
         - [Image Core Create](#Image-Core-Create)
         - [Using a preset style](#Using-a-preset-style )
     - [Stable Diffusion](#Stable-Diffusion)
+        - [Generating with a prompt](#Generating-with-a-prompt)
+        - [Generating with a prompt and an image](#Generating-with-a-prompt-and-an-image)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -342,6 +344,72 @@ Inventory of available models
 - **Parameter Count:** Indicates the model’s power (8B for Large, 2–2.5B for Medium).
 - **Speed:** `Turbo` versions generate images faster without sacrificing quality.
 - **Applications:** Large models are perfect for detailed and professional projects, while Medium models are ideal for quick, balanced tasks.
+
+<br/>
+
+### Generating with a prompt
+
+This mode creates an image based solely on a textual description. The `prompt` is the only mandatory input, but an optional `aspect_ratio` parameter is available to adjust the dimensions of the resulting image.
+
+**Asynchronous Code Example**
+
+```Pascal
+//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Generate, FMX.Stability.Tutorial;
+
+  StabilityResult.FileName := 'lighthouse4.png';
+
+  Stability.StableImage.Generate.Diffusion(
+    procedure (Params: TStableImageDiffusion)
+    begin
+      Params.AspectRatio(ratio16x9);
+      Params.Prompt('Lighthouse on a cliff overlooking the ocean');
+      Params.OutputFormat(png);
+    end,
+    function : TAsynStableImage
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Generate/paths/~1v2beta~1stable-image~1generate~1sd3/post)
+
+<br/>
+
+### Generating with a prompt and an image
+
+This method generates an image based on text input while using an existing image as the initial reference. The necessary parameters include:
+- `prompt`: the descriptive text that guides the image generation.
+- `image`: the starting image that serves as the foundation for the output.
+- `strength`: determines the degree to which the starting image influences the final result.
+- `mode`: should be set to "image-to-image".
+
+**Asynchronous Code Example**
+
+```Pascal
+//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Generate, FMX.Stability.Tutorial;
+
+  StabilityResult.FileName := 'lighthouse5.png';
+
+  Stability.StableImage.Generate.Diffusion(
+    procedure (Params: TStableImageDiffusion)
+    begin
+      Params.Prompt('There are many birds in the sky');
+      Params.Mode(imageToImage);
+      Params.Image('lighthouse4.png');
+      Params.Strength(0.6);
+      Params.OutputFormat(png);
+    end,
+    function : TAsynStableImage
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
 
 <br/>
 
