@@ -10,7 +10,6 @@ ___
 
 - [Introduction](#Introduction)
     - [Who is Stability AI](#Who-is-Stability-AI)
-    - [About this tutorial](#About-this-tutorial)
     - [Remarks](#remarks)
 - [Stability AI console](#Stability-AI-console)
 - [Generate](#Generate)
@@ -62,14 +61,6 @@ Built on the Würstchen architecture, this model improves accuracy and efficienc
 
 - `Stable Diffusion 3.5` (October 2024)
 Includes variants such as Stable Diffusion 3.5 Large and 3.5 Medium, offering more options for diverse generation tasks with optimized efficiency.
-
-<br/>
-
-## About this tutorial
-
-This project provides a Delphi wrapper for integrating `Stability.ai’s` APIs into `Delphi` applications. It simplifies access to the capabilities of their **text-to-image** and **image-to-image** models.
-
-The documentation begins with the most recent models and their features, gradually covering earlier versions to show the progression of the technology. While features from the initial API versions remain available, they may be deprecated over time, and the latest versions are recommended for future-proof integration.
 
 <br/>
 
