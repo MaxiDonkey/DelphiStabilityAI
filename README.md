@@ -28,6 +28,7 @@ ___
         - [Optional Parameters](#Optional-Parameters)
     - [SDXL and SD version 1](#SDXL-and-SD-version-1)
         - [Text to image prompting](#Text-to-image-prompting)
+        - [Image to image with prompt](#Image-to-image-with-prompt)
 - [Upscale](#Upscale)
 - [Contributing](#contributing)
 - [License](#license)
@@ -488,6 +489,14 @@ To use this model, set `stable-diffusion-v1-6` as the `engine_id` in your reques
 ```
 Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/SDXL-1.0-and-SD1.6/operation/textToImage)
 
+<br/>
+
+### Image to image with prompt
+
+**Adjusting the Degree of Transformation**
+- To retain approximately 35% of the original image in the final output, you can use either of these approaches: set `init_image_mode=IMAGE_STRENGTH` with `image_strength=0.35`, or use `init_image_mode=STEP_SCHEDULE` with `step_schedule_start=0.65`. Both methods yield similar results, but the `step_schedule` mode offers additional flexibility by allowing you to specify a `step_schedule_end` value, giving more nuanced control if needed. For further details, refer to the specific parameter descriptions below.
+
+<br/>
 
 # Upscale
 
