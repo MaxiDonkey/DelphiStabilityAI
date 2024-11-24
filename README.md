@@ -26,6 +26,7 @@ ___
         - [Generating with a prompt](#Generating-with-a-prompt)
         - [Generating with a prompt and an image](#Generating-with-a-prompt-and-an-image)
         - [Optional Parameters](#Optional-Parameters)
+- [Upscale](#Upscale)
 - [Contributing](#contributing)
 - [License](#license)
  
