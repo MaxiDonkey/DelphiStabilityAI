@@ -458,6 +458,35 @@ To use this model, set `stable-diffusion-v1-6` as the `engine_id` in your reques
 
 <br/>
 
+**Asynchronous Code Example**
+
+```Pascal
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Generate, 
+//  StabilityAI.Version1.SDXL1AndSD1_6, FMX.Stability.Tutorial; 
+
+  StabilityResult.FileName := 'lighthouse6.png';
+
+  Stability.Version1.SDXLAndSDL.TextToImage('stable-diffusion-xl-1024-v1-0',
+    procedure (Params: TPayload)
+    begin
+      Params.TextPrompts([TPrompt.New(1, 'A lighthouse on a cliff') ]);
+      Params.CfgScale(7);
+      Params.Height(1216);
+      Params.Width(832);
+      Params.Sampler(TSamplerType.K_DPMPP_2S_ANCESTRAL);
+      Params.Samples(1);
+      Params.Steps(30);
+    end,
+    function : TAsynArtifacts
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
 # Upscale
 
 <br/>
