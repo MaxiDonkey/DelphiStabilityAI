@@ -151,12 +151,13 @@ The name of each property is self-explanatory; if needed, refer to the internal 
     function : TAsynStableImage
     begin
       //Add a TImage on the form
+      //Add a TMemo on the form
       Result.Sender := Image1;
 
       Result.OnStart :=
         procedure (Sender: TObject)
         begin
-          Cursor := crHourGlass;
+          T.Memo.Lines.Text := T.Memo.Text + 'The generation has started. Please wait...' + sLineBreak;
         end;
 
       Result.OnSuccess :=
@@ -168,16 +169,14 @@ The name of each property is self-explanatory; if needed, refer to the internal 
             (Sender as TImage).Picture.LoadFromStream(Stream);
           finally
             Stream.Free;
-            Cursor := crDefault;
+            T.Memo.Lines.Text := T.Memo.Text + 'Generation ended successfully' + sLineBreak;
           end;
         end;
 
-      //Add a TMemo on the form
       Result.OnError :=
         procedure (Sender: TObject; Error: String)
         begin
           Memo1.Lines.Text := Memo1.Text + Error + sLineBreak;
-          Cursor := crDefault;
         end;
     end);
 ```
