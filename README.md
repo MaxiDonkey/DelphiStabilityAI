@@ -26,6 +26,7 @@ ___
         - [Generating with a prompt](#Generating-with-a-prompt)
         - [Generating with a prompt and an image](#Generating-with-a-prompt-and-an-image)
         - [Optional Parameters](#Optional-Parameters)
+    - [SDXL and SD version 1](#SDXL-and-SD-version-1)
 - [Upscale](#Upscale)
 - [Contributing](#contributing)
 - [License](#license)
@@ -427,6 +428,14 @@ Both modes allow the use of these optional parameters:
 - `seed`: Sets the randomness seed for the generation process.
 - `negative_prompt`: Defines keywords to exclude from the generated image.
 - `cfg_scale`: Adjusts the level of adherence to the prompt text during the diffusion process.
+
+<br/>
+
+### SDXL and SD version 1
+
+<br/>
+
+# Upscale
 
 <br/>
 
