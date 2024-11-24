@@ -237,17 +237,16 @@ It is also possible to provide a reference image to use as a starting point for 
 <br/>
 
 ## Stable Image Core
-
 **Specificity:**
 - `Stable Image Core` is a text-to-image generation service designed to deliver premium quality with speed. Unlike other similar tools, it requires no expertise in "prompt engineering." Users simply describe a style, scene, or character, and the tool generates an image that aligns with their description.
-
+<br/>
 **Key Points:**
 - **Premium Quality:** Produces high-quality images, perfect for creative and professional uses.
 - **Ease of Use:** No need for complex prompt-writing techniques.
 - **Speed:** Near-instant image generation, even for detailed descriptions.
 - **Flexibility:** Handles a wide range of requests, from artistic styles to specific scenes or characters.
 - **Reliability:** Delivers consistent results that align with provided descriptions without requiring adjustments.
-
+<br/>
 **Applications Inventory:**
 - **Design and Creative Work:** Ideal for creating visuals for graphic design projects or illustrations.
 - **Communication and Marketing:** Quickly generates eye-catching visuals for campaigns.
