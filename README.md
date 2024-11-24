@@ -212,7 +212,7 @@ Make sure to add a `TMemo` and a `TImage` component to your form beforehand.
 It is also possible to provide a reference image to use as a starting point for generation. In this case, the `strength` parameter must be specified, as it determines the influence of the input image on the final output. A `strength` value of 0 will produce an image identical to the input, while a value of 1 indicates no influence from the initial image.
 
 ```Pascal
-//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Generate; FMX.Stability.Tutorial;
+//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Generate, FMX.Stability.Tutorial;
 
   StabilityResult.FileName := 'lighthouse1.png';
 
@@ -257,6 +257,57 @@ It is also possible to provide a reference image to use as a starting point for 
 - **Creative Exploration:** Visualizes abstract ideas or concepts.
 - **Education and Training:** Produces illustrations for courses or educational materials.
 - **Rapid Prototyping:** Helps quickly design images for pitches or ongoing projects.
+
+<br/>
+
+**Asynchronous Code Example**
+
+```Pascal
+//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Generate, FMX.Stability.Tutorial;
+
+  StabilityResult.FileName := 'lighthouse2.png';
+
+  Stability.StableImage.Generate.ImageCore(
+    procedure (Params: TStableImageCore)
+    begin
+      Params.AspectRatio(ratio16x9);
+      Params.Prompt('Lighthouse on a cliff overlooking the ocean');
+      Params.OutputFormat(png);
+    end,
+    function : TAsynStableImage
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+<br>
+
+You can guide the image model toward a specific style by selecting from 17 available styles.
+
+```Pascal
+//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Generate, FMX.Stability.Tutorial;
+
+  StabilityResult.FileName := 'lighthouse3.png';
+
+  Stability.StableImage.Generate.ImageCore(
+    procedure (Params: TStableImageCore)
+    begin
+      Params.AspectRatio(ratio16x9);
+      Params.Prompt('Lighthouse on a cliff overlooking the ocean');
+      Params.StylePreset(TStylePreset.digitalArt);
+      Params.OutputFormat(png);
+    end,
+    function : TAsynStableImage
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
 
 <br/>
 
