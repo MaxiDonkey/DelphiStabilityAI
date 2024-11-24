@@ -190,7 +190,7 @@ To simplify the example codes provided in this tutorial, I have included two uni
 >```Pascal
 >//uses VCL.Stability.Tutorial;
 >
->  StabilitySender := TVCLStabilitySender.Create(Memo1, Image1);
+>  StabilityResult := TVCLStabilitySender.Create(Memo1, Image1);
 >```
 >
 >or
@@ -198,7 +198,7 @@ To simplify the example codes provided in this tutorial, I have included two uni
 >```Pascal
 >//uses FMX.Stability.Tutorial;
 >
->  StabilitySender := TFMXStabilitySender.Create(Memo1, Image1);
+>  StabilityResult := TFMXStabilitySender.Create(Memo1, Image1);
 >```
 >
 
@@ -213,7 +213,8 @@ It is also possible to provide a reference image to use as a starting point for 
 ```Pascal
 //uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Generate; FMX.Stability.Tutorial;
 
-  StabilitySender.FileName := 'lighthouse1.png';
+  StabilityResult.FileName := 'lighthouse1.png';
+
   Stability.StableImage.Generate.ImageUltra(
     procedure (Params: TStableImageUltra)
     begin
@@ -225,7 +226,7 @@ It is also possible to provide a reference image to use as a starting point for 
     end,
     function : TAsynStableImage
     begin
-      Result.Sender := StabilitySender;
+      Result.Sender := StabilityResult;
       Result.OnStart := Start;
       Result.OnSuccess := Display;
       Result.OnError := Display;
