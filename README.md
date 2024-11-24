@@ -22,6 +22,7 @@ ___
     - [Stable Image Core](#Stable-Image-Core)
         - [Image Core Create](#Image-Core-Create)
         - [Using a preset style](#Using-a-preset-style )
+    - [Stable Diffusion](#Stable-Diffusion)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -316,6 +317,31 @@ You can guide the image model toward a specific style by selecting from 17 avail
       Result.OnError := Display;
     end);
 ```
+
+<br/>
+
+## Stable Diffusion
+
+Inventory of available models
+
+**Stable Diffusion 3.5**
+- **SD3.5 Large:** Flagship model with 8 billion parameters, delivering exceptional image quality and precise prompt adherence. Ideal for professional use at 1-megapixel resolution.
+- **SD3.5 Large Turbo:** A distilled version of **SD3.5 Large**, designed for fast image generation in just 4 steps, while maintaining high quality and excellent prompt fidelity. Perfect for projects requiring quick execution.
+- **SD3.5 Medium:** Mid-tier model with 2.5 billion parameters, offering an optimal balance between prompt accuracy and image quality. Best suited for fast and efficient performance.
+
+<br/>
+
+**Stable Diffusion 3.0** (Fireworks AI)
+- **SD3 Large:** Model with 8 billion parameters, providing professional-grade performance similar to **SD3.5 Large**.
+- **SD3 Large Turbo:** Optimized version for faster execution while maintaining high-quality output.
+- **SD3 Medium:** Model with 2 billion parameters, balancing quality and speed for less intensive use cases.
+
+<br/>
+
+**Key Points:**
+- **Parameter Count:** Indicates the model’s power (8B for Large, 2–2.5B for Medium).
+- **Speed:** `Turbo` versions generate images faster without sacrificing quality.
+- **Applications:** Large models are perfect for detailed and professional projects, while Medium models are ideal for quick, balanced tasks.
 
 <br/>
 
