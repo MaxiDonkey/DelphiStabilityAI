@@ -533,7 +533,8 @@ Modify specific parts of an image using a mask. The mask must match the dimensio
 
 use the métode:
 ```Pascal
-  ImageToImageWithMask(const Model: string; ParamProc: TProc<TPayloadMask>; CallBacks: TFunc<TAsynArtifacts>);
+  ImageToImageWithMask(const Model: string; ParamProc: TProc<TPayloadMask>; 
+     CallBacks: TFunc<TAsynArtifacts>);
 ```
 
 <br/>
