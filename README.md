@@ -157,7 +157,7 @@ The name of each property is self-explanatory; if needed, refer to the internal 
       Result.OnStart :=
         procedure (Sender: TObject)
         begin
-          T.Memo.Lines.Text := T.Memo.Text + 'The generation has started. Please wait...' + sLineBreak;
+          Memo1.Lines.Text := Memo1.Text + 'The generation has started. Please wait...' + sLineBreak;
         end;
 
       Result.OnSuccess :=
@@ -166,10 +166,13 @@ The name of each property is self-explanatory; if needed, refer to the internal 
           var Stream := Image.GetStream;
           try
             Image.SaveToFile('lighthouse.png');
-            (Sender as TImage).Picture.LoadFromStream(Stream);
+            //for VCL 
+            Image1.Picture.LoadFromStream(Stream);
+            //for FMX
+            //Image1.Bitmap.LoadFromStream(Stream);
+            Memo1.Lines.Text := Memo1.Text + 'Generation ended successfully' + sLineBreak;
           finally
             Stream.Free;
-            T.Memo.Lines.Text := T.Memo.Text + 'Generation ended successfully' + sLineBreak;
           end;
         end;
 
