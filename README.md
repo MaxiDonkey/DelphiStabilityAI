@@ -12,8 +12,8 @@ ___
     - [Who is Stability AI](#Who-is-Stability-AI)
     - [Remarks](#remarks)
 - [Stability AI console](#Stability-AI-console)
+- [Asynchronous callback mode management](#Asynchronous-callback-mode-management)
 - [Generate](#Generate)
-    - [Asynchronous callback mode management](#Asynchronous-callback-mode-management)
     - [Stable Image Ultra](#Stable-Image-Ultra)
         - [Text to image](#Text-to-image)
         - [Tools for simplifying this tutorial](#Tools-for-simplifying-this-tutorial)
@@ -97,9 +97,7 @@ Once you have a token, you can initialize `IStabilityAI` interface, which is an 
 
 <br/>
 
-# Generate
-
-## Asynchronous callback mode management
+# Asynchronous callback mode management
 
 In the context of asynchronous methods, for a method that does not involve streaming, callbacks use the following generic record: `TAsynCallBack<T> = record` defined in the `StabilityAI.Async.Support.pas` unit. This record exposes the following properties:
 
@@ -120,6 +118,8 @@ The name of each property is self-explanatory; if needed, refer to the internal 
 >
 
 <br/>
+
+# Generate
 
 ## Stable Image Ultra
 
