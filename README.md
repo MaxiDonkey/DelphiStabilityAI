@@ -36,6 +36,7 @@ ___
     - [Fast](#Fast)
 - [Edit](#Edit)
     - [Erase](#Erase)
+    - [Inpaint](#Inpaint)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -751,6 +752,12 @@ When a mask is provided :
     end,
    ...
 ```
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Edit/paths/~1v2beta~1stable-image~1edit~1erase/post)
+
+<br/>
+
+## Inpaint
 
 <br/>
 
