@@ -35,6 +35,7 @@ ___
         - [Fetch async generation result](#Fetch-async-generation-result)
     - [Fast](#Fast)
 - [Edit](#Edit)
+    - [Erase](#Erase)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -684,6 +685,16 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
 - **Search and Replace:** Changes objects based on textual instructions.
 - **Search and Recolor:** Adjusts the colors of specific objects.
 - **Remove Background:** Segments the foreground to eliminate the background.
+
+<br/>
+
+## Erase
+
+The Erase service is designed to eliminate unwanted elements from images, such as imperfections on faces or objects on surfaces, using masking techniques.
+
+Masks can be supplied in one of two methods:
+1. Directly, by providing a separate image through the mask parameter.
+2. Indirectly, by extracting it from the alpha channel of the image parameter.
 
 <br/>
 
