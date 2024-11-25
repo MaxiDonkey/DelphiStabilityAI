@@ -970,6 +970,11 @@ The API returns the ID of the ongoing task, just like the [Upscale Creative](#Cr
 
 # Control
 
+Tools for Creating Controlled Variations of Images and Sketches
+- **Sketch:** This feature transforms rough sketches into polished, refined outputs with a high level of precision. For non-sketch images, it offers advanced control over the final look by utilizing the image's contour lines and edges to guide adjustments.
+- **Structure:** Designed to maintain the structural integrity of an input image, this tool is ideal for sophisticated content creation tasks, such as reconstructing scenes or rendering characters based on existing models.
+- **Style:** By analyzing the stylistic elements of a reference image (control image), this service generates a new image aligned with the style of the reference, guided by the user's prompt. The result is an output that mirrors the artistic essence of the original.
+
 <br/>
 
 # Results
