@@ -706,7 +706,7 @@ Masks can be supplied in one of two methods:
 
 **Asynchronous Code Example**
 
-[!NOTE]
+>[!NOTE]
 >- If no specific <c>mask</c> is supplied, a mask will automatically be generated based on the image's alpha channel. Transparent areas will be subject to inpainting, while opaque regions will remain unchanged.
 >- If an image with an alpha channel is provided together with a mask, the <c>mask</c> will override the alpha channel.
 >
