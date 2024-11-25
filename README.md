@@ -974,6 +974,10 @@ The API returns the ID of the ongoing task, just like the [Upscale Creative](#Cr
 
 # Results
 
+Tools for fetching the results of your async generations.
+
+For using, see [Fetch async generation result](#Fetch-async-generation-result) 
+
 <br>
 
 # Contributing
