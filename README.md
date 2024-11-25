@@ -567,7 +567,9 @@ Accepts images ranging in size from 64x64 pixels up to 1 megapixel and enhances 
 **Asynchronous Code Example**
 
 ```Pascal
-//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Upscale;
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  StabilityAI.StableImage.Upscale;
 
   StabilityResult.FileName := 'Upscalelighthouse1.png';
 
@@ -602,7 +604,9 @@ Accepts images ranging from 64x64 pixels to a maximum of 1 megapixel, enhancing 
 **Asynchronous Code Example**
 
 ```Pascal
-//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Upscale;
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  StabilityAI.StableImage.Upscale;
 
   Stability.StableImage.Upscale.Creative(
     procedure (Params: TUpscaleCreative)
@@ -653,7 +657,9 @@ The Fast Upscaler serviceincrease image resolution by 400%. Designed for speed a
 **Asynchronous Code Example**
 
 ```Pascal
-//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Upscale;
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  StabilityAI.StableImage.Upscale;
 
   StabilityResult.FileName := 'Upscalelighthouse3.png';
 
@@ -695,6 +701,13 @@ The Erase service is designed to eliminate unwanted elements from images, such a
 Masks can be supplied in one of two methods:
 1. Directly, by providing a separate image through the mask parameter.
 2. Indirectly, by extracting it from the alpha channel of the image parameter.
+
+**Asynchronous Code Example**
+
+```Pascal
+//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Edit;
+
+```
 
 <br/>
 
