@@ -31,6 +31,7 @@ ___
         - [Image to image with mask](#Image-to-image-with-mask)
 - [Upscale](#Upscale)
     - [Conservative](#Conservative)
+    - [Creative Upscale](#Creative-Upscale)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -562,6 +563,7 @@ Accepts images ranging in size from 64x64 pixels up to 1 megapixel and enhances 
 **Asynchronous Code Example**
 
 ```Pascal
+//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Upscale;
 
   StabilityResult.FileName := 'Upscalelighthouse1.png';
 
@@ -582,6 +584,58 @@ Accepts images ranging in size from 64x64 pixels up to 1 megapixel and enhances 
 ```
 
 Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Upscale/paths/~1v2beta~1stable-image~1upscale~1conservative/post)
+
+<br/>
+
+## Creative Upscale
+
+Accepts images ranging from 64x64 pixels to a maximum of 1 megapixel, enhancing their resolution up to 4K. More broadly, it can upscale images by approximately 20 to 40 times while maintaining—and often improving—their quality. The Creative Upscale feature is particularly effective for heavily degraded images, but it is not suited for photos larger than 1 megapixel, as it applies significant reinterpretation (adjustable via the creativity scale).
+
+>[!WARNING]
+> This function is labeled as asynchronous by the editor, but in reality, it doesn't behave as such for a third-party application utilizing it. It operates more like a caching mechanism for a slightly delayed processing.
+>
+
+**Asynchronous Code Example**
+
+```Pascal
+//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Upscale;
+
+  Stability.StableImage.Upscale.Creative(
+    procedure (Params: TUpscaleCreative)
+    begin
+      Params.Image('lighthouse.png');
+      Params.Prompt('The gray light house');
+      Params.OutputFormat(png);
+    end,
+    function : TAsynResults
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+We retrieve the job ID, and in the next step, we need to load the image unless the status retrieved is "in-progress." In that case, the operation should be retried.
+
+
+```Pascal
+//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Results,
+
+  var Id := IdValue; // e.g. ea771536f066b7fd03d62384581982ecd8b54a932a6378d5809d43f6e5aa789a
+  StabilityResult.FileName := 'Upscalelighthouse2.png';
+  
+Stability.StableImage.Results.Fetch(Id,
+    function : TAsynResults
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Upscale/paths/~1v2beta~1stable-image~1upscale~1creative/post) and [here](https://platform.stability.ai/docs/api-reference#tag/Results/paths/~1v2beta~1results~1%7Bid%7D/get)
 
 <br/>
 
