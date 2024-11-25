@@ -631,7 +631,9 @@ We retrieve the job ID, and in the next step, we need to load the image unless t
 ### Fetch async generation result
 
 ```Pascal
-//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Results,
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  StabilityAI.StableImage.Results,
 
   // e.g. Id ---> ea771536f066b7fd03d62384581982ecd8b54a932a6378d5809d43f6e5aa789a
   StabilityResult.FileName := 'Upscalelighthouse2.png';
@@ -705,7 +707,9 @@ Masks can be supplied in one of two methods:
 **Asynchronous Code Example**
 
 ```Pascal
-//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Edit;
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  StabilityAI.StableImage.Edit;
 
 ```
 
