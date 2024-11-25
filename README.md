@@ -749,6 +749,7 @@ When a mask is provided :
       Params.GrowMask(6);
       Params.OutputFormat(png);
     end,
+   ...
 ```
 
 <br/>
