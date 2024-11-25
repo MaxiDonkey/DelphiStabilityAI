@@ -640,7 +640,7 @@ Stability.StableImage.Results.Fetch(Id,
     end);
 ```
 
-Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Results/paths/~1v2beta~1results~1%7Bid%7D/get) for `Fetch async generation result`
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Results/paths/~1v2beta~1results~1%7Bid%7D/get)
 
 <br/>
 
@@ -669,6 +669,8 @@ The Fast Upscaler serviceincrease image resolution by 400%. Designed for speed a
       Result.OnError := Display;
     end);
 ```
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Upscale/paths/~1v2beta~1stable-image~1upscale~1fast/post) 
 
 <br/>
 
