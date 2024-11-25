@@ -41,6 +41,7 @@ ___
     - [Search and Replace](#Search-and-Replace)
     - [Search and Recolor](#Search-Recolor)
     - [Remove Background](#Remove-Background)
+   - [Replace Background and Relight](#Replace-Background-and-Relight)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -922,6 +923,46 @@ The Remove Background service precisely identifies and isolates the foreground i
 ```
 
 Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Edit/paths/~1v2beta~1stable-image~1edit~1remove-background/post)
+
+<br/>
+
+## Replace Background and Relight
+
+The Replace Background and Relight editing service enables to effortlessly change backgrounds using AI-generated images or their own uploads, while seamlessly adjusting lighting to complement the subject. This API offers an efficient image editing solution tailored for various industries, including e-commerce, real estate, photography, and creative endeavors.
+
+Key features include:
+- **Background Replacement:** Effortlessly remove the current background and replace it with a new one.
+- **AI-Generated Backgrounds:** Generate unique backgrounds with AI based on your chosen prompts.
+- **Relighting:** Fine-tune the lighting of images to correct underexposure or overexposure.
+- **Customizable Inputs:** Opt for your own uploaded background or create one using AI.
+- **Lighting Controls:** Adjust the reference, direction, and intensity of lighting for a polished look.
+
+>[!WARNING]
+> This function is labeled as asynchronous by the editor, but in reality, it doesn't behave as such for a third-party application utilizing it. It operates more like a caching mechanism for a slightly delayed processing.
+>
+
+```Pascal
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  StabilityAI.StableImage.Edit;
+
+  Stability.StableImage.Edit.ReplaceBackgroundAndRelight(
+    procedure (Params: TReplaceBackgroundAndRelight)
+    begin
+      Params.SubjectImage('Lighthouse.png');
+      Params.BackgroundPrompt('cinematic lighting');
+      Params.OutputFormat(png);
+    end,
+    function: TAsynResults
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+The API returns the ID of the ongoing task, just like the [Upscale Creative](#Creative-Upscale) API. You then need to use the [Fetch](#Fetch-async-generation-result) API, as previously mentioned.
 
 <br/>
 
