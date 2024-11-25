@@ -701,15 +701,15 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
 
 The Erase service is designed to eliminate unwanted elements from images, such as imperfections on faces or objects on surfaces, using masking techniques.
 
-Masks can be supplied in one of two methods:
+`Masks` can be supplied in one of two methods:
 1. Directly, by providing a separate image through the mask parameter.
 2. Indirectly, by extracting it from the alpha channel of the image parameter.
 
 **Asynchronous Code Example**
 
 >[!NOTE]
->- If no specific <c>mask</c> is supplied, a mask will automatically be generated based on the image's alpha channel. Transparent areas will be subject to inpainting, while opaque regions will remain unchanged.
->- If an image with an alpha channel is provided together with a mask, the <c>mask</c> will override the alpha channel.
+>- If no specific `mask` is supplied, a mask will automatically be generated based on the image's alpha channel. Transparent areas will be subject to inpainting, while opaque regions will remain unchanged.
+>- If an image with an alpha channel is provided together with a mask, the `mask` will override the alpha channel.
 >
 
 ```Pascal
@@ -738,7 +738,7 @@ When a mask is provided :
 
 >[!NOTE]
 > - The input for this parameter should be a black-and-white image where the intensity of each pixel determines the strength of the inpainting effect. Darker pixels indicate minimal or no inpainting, while lighter pixels represent maximum inpainting intensity, with completely black pixels having no effect and completely white pixels applying the strongest effect.
-> - If the <c>mask</c>'s dimensions differ from those of the image parameter, it will be automatically adjusted to match the image size.
+> - If the `mask`'s dimensions differ from those of the image parameter, it will be automatically adjusted to match the image size.
 >
 
 ```Pascal
@@ -758,6 +758,12 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
 <br/>
 
 ## Inpaint
+
+Modify images intelligently by adding or replacing specific sections with new content, guided by a `mask` image.
+
+This `mask` can be supplied in two ways:
+- By directly providing a separate image through the mask parameter.
+- By extracting it from the alpha channel of the image parameter.
 
 <br/>
 
