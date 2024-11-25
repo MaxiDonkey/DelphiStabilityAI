@@ -33,6 +33,7 @@ ___
     - [Conservative](#Conservative)
     - [Creative Upscale](#Creative-Upscale)
         - [Fetch async generation result](#Fetch-async-generation-result)
+    - [Fast](#Fast)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -640,6 +641,34 @@ Stability.StableImage.Results.Fetch(Id,
 ```
 
 Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Results/paths/~1v2beta~1results~1%7Bid%7D/get) for `Fetch async generation result`
+
+<br/>
+
+## Fast
+
+The Fast Upscaler serviceincrease image resolution by 400%. Designed for speed and efficiency, it processes images in approximately one second, making it an excellent tool for improving the clarity of compressed visuals, perfect for social media posts and various other uses.
+
+**Asynchronous Code Example**
+
+```Pascal
+//uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Upscale;
+
+  StabilityResult.FileName := 'Upscalelighthouse3.png';
+
+  Stability.StableImage.Upscale.Fast(
+    procedure (Params: TUpscaleFast)
+    begin
+      Params.Image('lighthouse.png');
+      Params.OutputFormat(png);
+    end,
+    function : TAsynStableImage
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
 
 <br/>
 
