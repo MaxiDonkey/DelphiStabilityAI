@@ -677,6 +677,14 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
 
 # Edit
 
+**Feature Inventory**
+- **Erase:** Removes unwanted elements.
+- **Outpaint:** Extends the image beyond its boundaries.
+- **Inpaint:** Edits or replaces specific defined areas.
+- **Search and Replace:** Changes objects based on textual instructions.
+- **Search and Recolor:** Adjusts the colors of specific objects.
+- **Remove Background:** Segments the foreground to eliminate the background.
+
 <br/>
 
 # Contributing
