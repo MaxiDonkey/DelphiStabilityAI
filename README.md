@@ -32,6 +32,7 @@ ___
 - [Upscale](#Upscale)
     - [Conservative](#Conservative)
     - [Creative Upscale](#Creative-Upscale)
+        - [Fetch async generation result](#Fetch-async-generation-result)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -616,8 +617,11 @@ Accepts images ranging from 64x64 pixels to a maximum of 1 megapixel, enhancing 
     end);
 ```
 
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Upscale/paths/~1v2beta~1stable-image~1upscale~1creative/post)
+
 We retrieve the job ID, and in the next step, we need to load the image unless the status retrieved is "in-progress." In that case, the operation should be retried.
 
+### Fetch async generation result
 
 ```Pascal
 //uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Results,
@@ -635,7 +639,7 @@ Stability.StableImage.Results.Fetch(Id,
     end);
 ```
 
-Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Upscale/paths/~1v2beta~1stable-image~1upscale~1creative/post) and [here](https://platform.stability.ai/docs/api-reference#tag/Results/paths/~1v2beta~1results~1%7Bid%7D/get) for `Fetch async generation result`
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Results/paths/~1v2beta~1results~1%7Bid%7D/get) for `Fetch async generation result`
 
 <br/>
 
