@@ -709,7 +709,7 @@ The Erase service is designed to eliminate unwanted elements from images, such a
 
 >[!NOTE]
 >- If no specific `mask` is supplied, a mask will automatically be generated based on the image's alpha channel. Transparent areas will be subject to inpainting, while opaque regions will remain unchanged.
->- If an image with an alpha channel is provided together with a mask, the `mask` will override the alpha channel.
+>- If an image with an alpha channel is provided together with a `mask`, the `mask` will override the alpha channel.
 >
 
 ```Pascal
