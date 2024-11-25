@@ -14,6 +14,16 @@ uses
   REST.Json.Types, StabilityAI.API, StabilityAI.Common;
 
 type
+  /// <summary>
+  /// Provides tools to retrieve and manage the results of asynchronous or cached image generation tasks
+  /// performed by StabilityAI's API.
+  /// </summary>
+  /// <remarks>
+  /// This class contains methods to check the status of image creation tasks and retrieve results.
+  /// It supports both synchronous and asynchronous approaches, offering flexibility depending on the use case.
+  ///
+  /// Results are stored for 24 hours after generation. After this period, results are deleted and cannot be retrieved.
+  /// </remarks>
   TResultsRoute = class(TStabilityAIAPIRoute)
     /// <summary>
     /// Tools to retrieve the results of your asynchronous (or cached) builds.
