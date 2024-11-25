@@ -41,7 +41,9 @@ ___
     - [Search and Replace](#Search-and-Replace)
     - [Search and Recolor](#Search-Recolor)
     - [Remove Background](#Remove-Background)
-   - [Replace Background and Relight](#Replace-Background-and-Relight)
+    - [Replace Background and Relight](#Replace-Background-and-Relight)
+- [Control](#Control)
+- [Results](##Fetch-async-generation-result)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -963,6 +965,10 @@ Key features include:
 ```
 
 The API returns the ID of the ongoing task, just like the [Upscale Creative](#Creative-Upscale) API. You then need to use the [Fetch](#Fetch-async-generation-result) API, as previously mentioned.
+
+<br/>
+
+# Control
 
 <br/>
 
