@@ -39,6 +39,8 @@ ___
     - [Inpaint](#Inpaint)
     - [Outpaint](#Outpaint)
     - [Search and Replace](#Search-and-Replace)
+    - [Search and Recolor](#Search-Recolor)
+    - [Remove Background](#Remove-Background)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -856,6 +858,70 @@ The Search and Replace service offers a specialized form of inpainting that elim
       Result.OnError := Display;
     end);
 ```
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Edit/paths/~1v2beta~1stable-image~1edit~1search-and-replace/post)
+
+<br/>
+
+## Search and Recolor
+
+By utilizing the Search and Recolor service, you can change the color of a specific object in an image through a simple prompt. This specialized form of inpainting doesn't require a mask. Instead, the service automatically segments the object and applies the new colors as specified in your prompt.
+
+```Pascal
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  StabilityAI.StableImage.Edit;
+
+  StabilityResult.FileName := 'SearchRecolorLighthouse.png';
+
+  Stability.StableImage.Edit.SearchAndRecolor(
+    procedure (Params: TSearchAndRecolor)
+    begin
+      Params.Image('Lighthouse.png');
+      Params.Prompt('The lighthouse is pink');
+      Params.SelectPrompt('Lighthouse');
+      Params.OutputFormat(png);
+    end,
+    function: TAsynStableImage
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Edit/paths/~1v2beta~1stable-image~1edit~1search-and-recolor/post)
+
+<br/>
+
+## Remove Background
+
+The Remove Background service precisely identifies and isolates the foreground in an image, allowing for the background to be either removed or replaced as needed.
+
+```Pascal
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  StabilityAI.StableImage.Edit;
+
+  StabilityResult.FileName := 'RemoveBackgroundLighthouse.png';
+
+  Stability.StableImage.Edit.RemoveBackground(
+    procedure (Params: TRemoveBackground)
+    begin
+      Params.Image('Lighthouse.png');
+      Params.OutputFormat(png);
+    end,
+    function: TAsynStableImage
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Edit/paths/~1v2beta~1stable-image~1edit~1remove-background/post)
 
 <br/>
 
