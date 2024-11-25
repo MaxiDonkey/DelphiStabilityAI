@@ -1,6 +1,14 @@
 unit VCL.Stability.Tutorial;
 
-{ Tutorial Support Unit }
+{ Tutorial Support Unit
+
+   WARNING:
+     This module is intended solely to illustrate the examples provided in the
+     README.md file of the repository :
+         https://github.com/MaxiDonkey/DelphiStabilityAI.
+     Under no circumstances should the methods described below be used outside
+     of the examples presented on the repository's page.
+}
 
 interface
 
@@ -16,6 +24,7 @@ type
     FImage: TImage;
     FFileName: string;
   public
+    property Id: string read FId write FId;
     property Memo: TMemo read FMemo write FMemo;
     property Image: TImage read FImage write FImage;
     property FileName: string read FFileName write FFileName;
@@ -77,11 +86,19 @@ begin
   if not Value.Id.IsEmpty then
     begin
       Display(Sender, Value.Id);
-    end
-  else
-    begin
-      Display(Sender, Value as TStableImage);
+      StabilityResult.Id := Value.Id;
+      { Keep only the last ID of the job in progress !!!
+        Please refer to the warning in the unit header. }
     end;
+  if Value.Status = 'in-progress' then
+    begin
+      Display(Sender, 'in-progress');
+      Exit;
+    end;
+  try
+    Display(Sender, Value as TStableImage);
+  except
+  end;
 end;
 
 

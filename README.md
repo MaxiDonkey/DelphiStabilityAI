@@ -628,10 +628,10 @@ We retrieve the job ID, and in the next step, we need to load the image unless t
 ```Pascal
 //uses StabilityAI, StabilityAI.Types, StabilityAI.Common, StabilityAI.StableImage.Results,
 
-  var Id := IdValue; // e.g. ea771536f066b7fd03d62384581982ecd8b54a932a6378d5809d43f6e5aa789a
+  // e.g. Id ---> ea771536f066b7fd03d62384581982ecd8b54a932a6378d5809d43f6e5aa789a
   StabilityResult.FileName := 'Upscalelighthouse2.png';
   
-  Stability.StableImage.Results.Fetch(Id,
+  Stability.StableImage.Results.Fetch(StabilityResult.Id,
     function : TAsynResults
     begin
       Result.Sender := StabilityResult;
