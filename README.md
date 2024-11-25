@@ -702,7 +702,7 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
 The Erase service is designed to eliminate unwanted elements from images, such as imperfections on faces or objects on surfaces, using masking techniques.
 
 `Masks` can be supplied in one of two methods:
-1. Directly, by providing a separate image through the mask parameter.
+1. Directly, by providing a separate image through the `mask` parameter.
 2. Indirectly, by extracting it from the alpha channel of the image parameter.
 
 **Asynchronous Code Example**
