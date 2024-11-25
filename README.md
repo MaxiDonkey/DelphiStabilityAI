@@ -37,6 +37,7 @@ ___
 - [Edit](#Edit)
     - [Erase](#Erase)
     - [Inpaint](#Inpaint)
+    - [Outpaint](#Outpaint)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -764,6 +765,39 @@ Modify images intelligently by adding or replacing specific sections with new co
 This `mask` can be supplied in two ways:
 - By directly providing a separate image through the mask parameter.
 - By extracting it from the alpha channel of the image parameter.
+
+```Pascal
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  StabilityAI.StableImage.Edit;
+
+  StabilityResult.FileName := 'InpaintLighthouse.png';
+
+  Stability.StableImage.Edit.Inpaint(
+    procedure (Params: TInpaint)
+    begin
+      Params.Image('Lighthouse.png');
+      Params.Mask('Mask01.png');
+      Params.Prompt('The lighthouse is bigger');
+      Params.OutputFormat(png);
+    end,
+    function: TAsynStableImage
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+The use of the `mask` is identical to that described with the [erase](#Erase) API.
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Edit/paths/~1v2beta~1stable-image~1edit~1inpaint/post)
+
+<br/>
+
+## Outpaint
+
 
 <br/>
 
