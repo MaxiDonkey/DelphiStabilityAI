@@ -43,7 +43,7 @@ ___
     - [Remove Background](#Remove-Background)
     - [Replace Background and Relight](#Replace-Background-and-Relight)
 - [Control](#Control)
-- [Results](##Fetch-async-generation-result)
+- [Results](#Fetch-async-generation-result)
 - [Contributing](#contributing)
 - [License](#license)
  
