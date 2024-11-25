@@ -631,7 +631,7 @@ We retrieve the job ID, and in the next step, we need to load the image unless t
   var Id := IdValue; // e.g. ea771536f066b7fd03d62384581982ecd8b54a932a6378d5809d43f6e5aa789a
   StabilityResult.FileName := 'Upscalelighthouse2.png';
   
-Stability.StableImage.Results.Fetch(Id,
+  Stability.StableImage.Results.Fetch(Id,
     function : TAsynResults
     begin
       Result.Sender := StabilityResult;
