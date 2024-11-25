@@ -43,7 +43,7 @@ ___
     - [Remove Background](#Remove-Background)
     - [Replace Background and Relight](#Replace-Background-and-Relight)
 - [Control](#Control)
-- [Results](#Fetch-async-generation-result)
+- [Results](#Results)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -971,6 +971,10 @@ The API returns the ID of the ongoing task, just like the [Upscale Creative](#Cr
 # Control
 
 <br/>
+
+# Results
+
+<br>
 
 # Contributing
 
