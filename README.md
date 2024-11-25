@@ -798,6 +798,33 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
 
 ## Outpaint
 
+The Outpaint service allows for the seamless extension of an image by adding content in any direction to fill the surrounding space. Unlike other methods, whether automated or manual, this service is designed to reduce visible artifacts and avoid noticeable indications of image editing.
+
+```Pascal
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  StabilityAI.StableImage.Edit;
+
+  StabilityResult.FileName := 'OutpaintLighthouse.png';
+
+  Stability.StableImage.Edit.Outpaint(
+    procedure (Params: TOutpaint)
+    begin
+      Params.Image('Lighthouse.png');
+      Params.Right(200);
+      Params.Down(400);
+      Params.OutputFormat(png);
+    end,
+    function: TAsynStableImage
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Edit/paths/~1v2beta~1stable-image~1edit~1outpaint/post)
 
 <br/>
 
