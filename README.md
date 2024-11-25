@@ -38,6 +38,7 @@ ___
     - [Erase](#Erase)
     - [Inpaint](#Inpaint)
     - [Outpaint](#Outpaint)
+    - [Search and Replace](#Search-and-Replace)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -825,6 +826,36 @@ The Outpaint service allows for the seamless extension of an image by adding con
 ```
 
 Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Edit/paths/~1v2beta~1stable-image~1edit~1outpaint/post)
+
+<br/>
+
+## Search and Replace
+
+The Search and Replace service offers a specialized form of inpainting that eliminates the need for a mask. Instead, users can specify an object to replace by describing it in plain language using a search_prompt. The service will then automatically detect and segment the specified object, seamlessly substituting it with the one described in the prompt.
+
+```Pascal
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  StabilityAI.StableImage.Edit;
+
+  StabilityResult.FileName := 'SearchReplaceLighthouse.png';
+
+  Stability.StableImage.Edit.SearchAndReplace(
+    procedure (Params: TSearchAndReplace)
+    begin
+      Params.Image('Lighthouse.png');
+      Params.Prompt('Replace the lighthouse');
+      Params.SearchPrompt('Lighthouse');
+      Params.OutputFormat(png);
+    end,
+    function: TAsynStableImage
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
 
 <br/>
 
