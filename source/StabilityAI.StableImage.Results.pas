@@ -21,7 +21,6 @@ type
   /// <remarks>
   /// This class contains methods to check the status of image creation tasks and retrieve results.
   /// It supports both synchronous and asynchronous approaches, offering flexibility depending on the use case.
-  ///
   /// Results are stored for 24 hours after generation. After this period, results are deleted and cannot be retrieved.
   /// </remarks>
   TResultsRoute = class(TStabilityAIAPIRoute)
