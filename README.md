@@ -34,6 +34,7 @@ ___
     - [Creative Upscale](#Creative-Upscale)
         - [Fetch async generation result](#Fetch-async-generation-result)
     - [Fast](#Fast)
+- [Edit](#Edit)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -671,6 +672,10 @@ The Fast Upscaler serviceincrease image resolution by 400%. Designed for speed a
 ```
 
 Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Upscale/paths/~1v2beta~1stable-image~1upscale~1fast/post) 
+
+<br/>
+
+# Edit
 
 <br/>
 
