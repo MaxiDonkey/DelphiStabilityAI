@@ -38,7 +38,7 @@ type
   procedure Display(Sender: TObject; Value: TResults); overload;
 
 var
-  StabilityResult: TFMXStabilitySender;
+  StabilityResult: TFMXStabilitySender = nil;
 
 implementation
 
