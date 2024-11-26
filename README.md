@@ -44,6 +44,8 @@ ___
     - [Replace Background and Relight](#Replace-Background-and-Relight)
 - [Control](#Control)
     - [Sketch](#Sketch)
+    - [Structure](#Structure)
+    - [Style](#Style)
 - [Results](#Results)
 - [Contributing](#contributing)
 - [License](#license)
@@ -967,6 +969,8 @@ Key features include:
 
 The API returns the ID of the ongoing task, just like the [Upscale Creative](#Creative-Upscale) API. You then need to use the [Fetch](#Fetch-async-generation-result) API, as previously mentioned.
 
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Edit/paths/~1v2beta~1stable-image~1edit~1replace-background-and-relight/post)
+
 <br/>
 
 # Control
@@ -977,6 +981,97 @@ Tools for Creating Controlled Variations of Images and Sketches
 - **Style:** By analyzing the stylistic elements of a reference image (control image), this service generates a new image aligned with the style of the reference, guided by the user's prompt. The result is an output that mirrors the artistic essence of the original.
 
 ## Sketch
+
+This tool is designed for development workflows involving iterative design and brainstorming. It transforms hand-drawn sketches into polished visuals with precise adjustments. Additionally, it enables fine-tuned control over the final appearance of non-sketch images by utilizing the image's contours and edges.
+
+```Pascal
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  StabilityAI.StableImage.Control;
+
+  StabilityResult.FileName := 'Control01.png';
+
+  Stability.StableImage.Control.Sketch(
+    procedure (Params: TSketch)
+    begin
+      Params.Image('lighthouse.png');
+      Params.ControlStrength(0.7);
+      Params.Prompt('a medieval castle on a hill');
+      Params.OutputFormat(png);
+    end,
+    function : TAsynStableImage
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Control/paths/~1v2beta~1stable-image~1control~1sketch/post)
+
+<br/>
+
+## Structure
+
+This service is designed to generate images while preserving the structure of an input image, making it particularly useful for tasks like replicating scenes or rendering characters based on predefined models.
+
+```Pascal
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  StabilityAI.StableImage.Control;
+
+  StabilityResult.FileName := 'Control02.png';
+
+  Stability.StableImage.Control.Structure(
+    procedure (Params: TStructure)
+    begin
+      Params.Image('lighthouse.png');
+      Params.ControlStrength(0.7);
+      Params.Prompt('a well manicured shrub in an english garden');
+      Params.OutputFormat(png);
+    end,
+    function : TAsynStableImage
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Control/paths/~1v2beta~1stable-image~1control~1structure/post)
+
+<br/>
+
+## Style
+
+This tool analyzes the stylistic features of a given input image (control image) and applies them to generate a new image guided by a specified prompt. The output image retains the visual style of the control image while incorporating the requested content.
+
+```Pascal
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  StabilityAI.StableImage.Control;
+
+  StabilityResult.FileName := 'Control03.png';
+
+  Stability.StableImage.Control.Style(
+    procedure (Params: TStyle)
+    begin
+      Params.Image('lighthouse.png');
+      Params.Prompt('a majestic portrait of a chicken');
+      Params.OutputFormat(png);
+    end,
+    function : TAsynStableImage
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Control/paths/~1v2beta~1stable-image~1control~1style/post)
 
 <br/>
 
