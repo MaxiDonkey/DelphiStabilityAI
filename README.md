@@ -47,6 +47,7 @@ ___
     - [Structure](#Structure)
     - [Style](#Style)
 - [Results](#Results)
+- [3D](#3D)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -1060,6 +1061,7 @@ This tool analyzes the stylistic features of a given input image (control image)
     begin
       Params.Image('lighthouse.png');
       Params.Prompt('a majestic portrait of a chicken');
+      Params.Fidelity(0.7);
       Params.OutputFormat(png);
     end,
     function : TAsynStableImage
@@ -1081,7 +1083,11 @@ Tools for fetching the results of your async generations.
 
 For using, see [Fetch async generation result](#Fetch-async-generation-result) 
 
-<br>
+<br/>
+
+# 3D
+
+<br/>
 
 # Contributing
 
