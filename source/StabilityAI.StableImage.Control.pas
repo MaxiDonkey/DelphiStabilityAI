@@ -155,6 +155,35 @@ type
     constructor Create; reintroduce;
   end;
 
+  /// <summary>
+  /// The <c>TControlRoute</c> class provides an interface for advanced image processing services.
+  /// This class wraps the functionality for three core services:
+  /// </summary>
+  /// <remarks>
+  /// <para>
+  /// <c>Sketch</c> - Enhances rough sketches into refined images.
+  /// </para>
+  /// <para>
+  /// <c>Structure</c> - Preserves and recreates the structural integrity of input images, ideal for complex scenes or models.
+  /// </para>
+  /// <para>
+  /// <c>Style</c> - Extracts stylistic elements from an image and applies them to new outputs.
+  /// </para>
+  /// <para>
+  /// The <c>TControlRoute</c> class is part of the Stability AI image generation ecosystem, providing an easy-to-use
+  /// interface for integrating the platform's advanced image manipulation capabilities.
+  /// </para>
+  /// <para>
+  /// Each method supports both synchronous and asynchronous operations, catering to different programming needs:
+  /// </para>
+  /// <para>
+  /// Synchronous methods return the generated image directly upon completion.
+  /// </para>
+  /// <para>
+  /// Asynchronous methods leverage callbacks to handle success and error states, making them suitable for
+  /// applications requiring non-blocking operations.
+  /// </para>
+  /// </remarks>
   TControlRoute = class(TStabilityAIAPIRoute)
     /// <summary>
     /// This service offers an ideal solution for design projects that require brainstorming and frequent iterations. It upgrades rough hand-drawn sketches to refined outputs with precise control. For non-sketch images, it allows detailed manipulation of the final appearance by leveraging the contour lines and edges within the image.

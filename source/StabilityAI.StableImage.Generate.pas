@@ -183,6 +183,24 @@ type
     constructor Create; reintroduce;
   end;
 
+  /// <summary>
+  /// The <c>TGenerateRoute</c> class provides methods to interact with the StabilityAI API for image generation.
+  /// It serves as an entry point to create high-quality images using Stable Diffusion models, offering both
+  /// synchronous and asynchronous methods tailored to various use cases and performance needs.
+  /// </summary>
+  /// <remarks>
+  /// <para>
+  /// The <c>TGenerateRoute</c> class encapsulates API calls for generating images with different resolutions,
+  /// styles, and configurations using Stable Diffusion 3.x and 3.5 models. It includes functionalities for
+  /// defining image parameters, handling image streams, and utilizing asynchronous callbacks for non-blocking
+  /// operations.
+  /// </para>
+  /// <para>
+  /// By leveraging the <c>TGenerateRoute</c> methods, developers can create images programmatically, save them
+  /// to files, or directly use them in their applications. The API is highly customizable, allowing fine-tuning
+  /// of parameters like output format, image strength, style presets, and model types.
+  /// </para>
+  /// </remarks>
   TGenerateRoute = class(TStabilityAIAPIRoute)
     /// <summary>
     /// Create an image with 1 megapixel resolution. The default resolution is 1024x1024.
