@@ -538,6 +538,29 @@ type
     constructor Create; reintroduce;
   end;
 
+  /// <summary>
+  /// <c>TEditRoute</c> is a class providing access to various image editing services through Stability AI's API.
+  /// </summary>
+  /// <remarks>
+  /// <c>TEditRoute</c> encapsulates a variety of image manipulation features such as erasing objects, inpainting, outpainting,
+  /// replacing or recoloring elements, and relighting scenes. It serves as a comprehensive interface to interact with these
+  /// functionalities through both synchronous and asynchronous methods. This class is specifically designed to simplify
+  /// integration and streamline the workflow for developers by centralizing API calls for all supported image editing operations.
+  /// Each editing service is implemented as a distinct function or procedure in this class, supporting parameterized
+  /// configuration through anonymous methods. Developers can customize image transformation parameters dynamically and
+  /// seamlessly integrate them into their applications with ease. Error handling mechanisms are in place to address any
+  /// issues during API interaction.
+  /// Below are the main services provided by this class:
+  /// <para>- Erase: Remove unwanted elements from images using masks.</para>
+  /// <para>- Inpaint: Intelligently modify selected regions of an image based on masks.</para>
+  /// <para>- Outpaint: Expand images by generating content in any direction.</para>
+  /// <para>- Search and Replace: Identify and replace objects in an image without needing masks.</para>
+  /// <para>- Search and Recolor: Modify the color of objects in an image based on a prompt.</para>
+  /// <para>- Remove Background: Segment the foreground from the background and apply modifications.</para>
+  /// <para>- Replace Background and Relight: Replace backgrounds and relight scenes to achieve cohesive output.</para>
+  /// This class is designed to be flexible and reusable, offering both synchronous methods for immediate results and asynchronous
+  /// methods for enhanced responsiveness in applications with heavy processing or user interaction.
+  /// </remarks>
   TEditRoute = class(TStabilityAIAPIRoute)
     /// <summary>
     /// The Erase service allows you to eliminate undesired elements, like imperfections on portraits or objects on desks, by utilizing image masking techniques.
