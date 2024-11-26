@@ -99,7 +99,7 @@ type
     /// Controls the remeshing algorithm used to generate the 3D model.
     /// </summary>
     /// <param name="Value">
-    /// Enum: <c>none</c>, <c>quad</c>, triangle</c>  (Default: <c>none</c>)
+    /// Enum: <c>none</c>, <c>quad</c>, <c>triangle</c>  (Default: <c>none</c>)
     /// </param>
     /// <remarks>
     /// The remeshing algorithm determines how the 3D model is constructed from the input image. The default value of "none" means that the model is generated without remeshing, which is suitable for most use cases. The "triangle" option generates a model with triangular faces, while the "quad" option generates a model with quadrilateral faces. The "quad" option is useful when the 3D model will be used in DCC tools such as Maya or Blender.
@@ -170,7 +170,47 @@ type
   TAsynModel3D = TAsynCallBack<TModel3D>;
 
   TModel3DRoute = class(TStabilityAIAPIRoute)
-
+    /// <summary>
+    /// Stable Fast 3D generates high-quality 3D assets from a single 2D input image.
+    /// <para>
+    /// The output is a binary blob that includes a glTF asset, including JSON, buffers, and images.
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the mask, the seed, the the format of the output image.
+    /// </param>
+    /// <returns>
+    /// Returns a <c>TModel3D</c> object that contains 3D model base-64 generated.
+    /// <para>
+    /// - model/gltf-binary
+    /// </para>
+    /// </returns>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Data := Stability.StableImage.Edit.Erase(
+    ///     procedure (Params: TErase)
+    ///     begin
+    ///       Params.OutputFormat(png);
+    ///       // Move on to the other parameters.
+    ///     end);
+    ///   var Stream := Data.GetStream;
+    ///   try
+    ///     //--- Save image
+    ///     Data.SaveToFile(FileName);
+    ///     //--- Display image
+    ///     Image1.Picture.LoadFromStream(Stream);
+    ///   finally
+    ///     Data.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
     function Fast3D(ParamProc: TProc<TStable3D>): TModel3D; overload;
     procedure Fast3D(ParamProc: TProc<TStable3D>; CallBacks: TFunc<TAsynModel3D>); overload;
   end;

@@ -14,7 +14,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Types, FMX.Memo, FMX.Objects, FMX.Forms,
-  StabilityAI.Common, StabilityAI.Version1.SDXL1AndSD1_6;
+  StabilityAI.Common, StabilityAI.Version1.SDXL1AndSD1_6, StabilityAI.VideoAnd3D.Stable3D;
 
 type
   TFMXStabilitySender = class
@@ -36,6 +36,7 @@ type
   procedure Display(Sender: TObject; Result: TStableImage); overload;
   procedure Display(Sender: TObject; Result: TArtifacts); overload;
   procedure Display(Sender: TObject; Value: TResults); overload;
+  procedure Display(Sender: TObject; Value: TModel3D); overload;
 
 var
   StabilityResult: TFMXStabilitySender = nil;
@@ -99,6 +100,13 @@ begin
     Display(Sender, Value as TStableImage);
   except
   end;
+end;
+
+procedure Display(Sender: TObject; Value: TModel3D);
+begin
+  var T := Sender as TFMXStabilitySender;
+  Value.SaveToFile(T.FileName);
+  Display(Sender, 'Model 3d : ' + T.FileName);
 end;
 
 { TFMXStabilitySender }

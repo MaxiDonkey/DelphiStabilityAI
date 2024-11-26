@@ -1087,6 +1087,32 @@ For using, see [Fetch async generation result](#Fetch-async-generation-result)
 
 # 3D
 
+Stable Fast 3D generates high-quality 3D assets from a single 2D input image.
+
+```Pascal
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+// StabilityAI.VideoAnd3D.Stable3D;
+
+  StabilityResult.FileName := 'My_Result.gltf';
+
+  Stability.VideoAnd3D.Model3D.Fast3D(
+    procedure (Params: TStable3D)
+    begin
+      Params.Image('My_ImageTo3D.png');
+      Params.ForegroundRatio(0.85);
+    end,
+    function : TAsynModel3D
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/3D/paths/~1v2beta~13d~1stable-fast-3d/post)
+
 <br/>
 
 # Contributing
