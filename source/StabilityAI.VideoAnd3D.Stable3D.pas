@@ -118,17 +118,59 @@ type
     constructor Create; reintroduce;
   end;
 
+  /// <summary>
+  /// The <c>TModel3D</c> class represents a 3D model generated using the Stable3D API.
+  /// </summary>
+  /// <remarks>
+  /// <para>
+  /// This class extends <c>TModelDataReturned</c> to include additional methods and properties specifically tailored for managing and interacting with 3D models.
+  /// </para>
+  /// <para>
+  /// The <c>TModel3D</c> class provides functionality to save the generated 3D model to a file and retrieve its file name.
+  /// It decodes base64-encoded data and ensures the resulting file is compatible with common 3D formats such as GLTF.
+  /// </para>
+  /// </remarks>
   TModel3D = class(TModelDataReturned)
   private
     FFileName: string;
   public
+    /// <summary>
+    /// Saves the generated 3D object to a file.
+    /// </summary>
+    /// <param name="FileName">
+    /// The path to the file where the 3D model will be saved.
+    /// </param>
+    /// <remarks>
+    /// This method decodes the base64 encoded data and saves it to the specified file.
+    /// </remarks>
+    /// <exception cref="Exception">
+    /// Throws an exception if the image or video data cannot be decoded or saved.
+    /// </exception>
     function SaveToFile(const FileName: string): string;
+    /// <summary>
+    /// Gets the name of the file where the 3D model was saved.
+    /// </summary>
+    /// <value>
+    /// The path to the file as a string.
+    /// </value>
+    /// <remarks>
+    /// This property contains the file name specified in the last call to <c>SaveToFile</c>.
+    /// </remarks>
     property FileName: string read FFileName;
   end;
 
+  /// <summary>
+  /// Manages asynchronous chat callBacks for a chat request using <c>TModel3D</c> as the response type.
+  /// </summary>
+  /// <remarks>
+  /// The <c>TAsynModel3D</c> type extends the <c>TModel3D</c> record to handle the lifecycle of an asynchronous chat operation.
+  /// It provides event handlers that trigger at various stages, such as when the operation starts, completes successfully, or encounters an error.
+  /// This structure facilitates non-blocking chat operations and is specifically tailored for scenarios where multiple choices from a chat model are required.
+  /// </remarks>
   TAsynModel3D = TAsynCallBack<TModel3D>;
 
   TModel3DRoute = class(TStabilityAIAPIRoute)
+
     function Fast3D(ParamProc: TProc<TStable3D>): TModel3D; overload;
     procedure Fast3D(ParamProc: TProc<TStable3D>; CallBacks: TFunc<TAsynModel3D>); overload;
   end;

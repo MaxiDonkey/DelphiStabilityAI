@@ -124,14 +124,281 @@ type
     constructor Create; reintroduce;
   end;
 
+  /// <summary>
+  /// The <c>TUpscaleRoute</c> class provides access to Stability AI's image upscaling APIs, enabling image resolution enhancement through various upscaling modes such as Conservative, Creative, and Fast.
+  /// </summary>
+  /// <remarks>
+  /// The <c>TUpscaleRoute</c> class offers a structured interface to interact with the Stability AI platform's image upscaling capabilities.
+  /// It allows developers to:
+  /// <para>
+  /// - Perform conservative upscaling for minimal alteration of original images while significantly increasing resolution.
+  /// </para>
+  /// <para>
+  /// - Utilize creative upscaling to enhance and reimagine degraded images with controlled creativity.
+  /// </para>
+  /// <para>
+  /// - Opt for fast upscaling for quick resolution improvement, particularly suitable for low-latency applications.
+  /// </para>
+  /// Each method supports synchronous and asynchronous execution, offering flexibility for different application scenarios.
+  /// </remarks>
   TUpscaleRoute = class(TStabilityAIAPIRoute)
+    /// <summary>
+    /// Takes images between 64x64 and 1 megapixel and upscales them all the way to 4K resolution. Put more generally, it can upscale images ~20-40x times while preserving all aspects. Conservative Upscale minimizes alterations to the image and should not be used to reimagine an image.
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the prompt etc.
+    /// </param>
+    /// <returns>
+    /// Returns a <c>TStableImage</c> object that contains image base-64 generated.
+    /// </returns>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Data := Stability.StableImage.Upscale.Conservative(
+    ///     procedure (Params: TUpscaleConservative)
+    ///     begin
+    ///       Params.OutputFormat(png);
+    ///       // Move on to the other parameters.
+    ///     end);
+    ///   var Stream := Data.GetStream;
+    ///   try
+    ///     //--- Save image
+    ///     Data.SaveToFile(FileName);
+    ///     //--- Display image
+    ///     Image1.Picture.LoadFromStream(Stream);
+    ///   finally
+    ///     Data.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
     function Conservative(ParamProc: TProc<TUpscaleConservative>): TStableImage; overload;
+    /// <summary>
+    /// Takes images between 64x64 and 1 megapixel and upscales them all the way to 4K resolution. Put more generally, it can upscale images ~20-40x times while preserving all aspects. Conservative Upscale minimizes alterations to the image and should not be used to reimagine an image.
+    /// <para>
+    /// NOTE: This method is <c>asynchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the prompt etc.
+    /// </param>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.StableImage.Upscale.Conservative(
+    ///   procedure (Params: TUpscaleConservative)
+    ///   begin
+    ///     // Define parameters
+    ///   end,
+    ///
+    ///   function : TAsynStableImage
+    ///   begin
+    ///     Result.Sender := Image1;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Image: TStableImage)
+    ///       begin
+    ///         // Handle success operation
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
     procedure Conservative(ParamProc: TProc<TUpscaleConservative>; CallBacks: TFunc<TAsynStableImage>); overload;
-
+    /// <summary>
+    /// Takes images between 64x64 and 1 megapixel and upscales them all the way to 4K resolution. Put more generally, it can upscale images ~20-40x times while preserving, and often enhancing, quality. Creative Upscale works best on highly degraded images and is not for photos of 1mp or above as it performs heavy reimagining (controlled by creativity scale).
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the prompt etc.
+    /// </param>
+    /// <returns>
+    /// Returns a <c>TResults</c> object that contains Id of the task.
+    /// </returns>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Data := Stability.StableImage.Upscale.Creative(
+    ///     procedure (Params: TUpscaleCreative)
+    ///     begin
+    ///       Params.OutputFormat(png);
+    ///       // Move on to the other parameters.
+    ///     end);
+    ///   var Stream := Data.GetStream;
+    ///   try
+    ///     //--- Save image
+    ///     Data.SaveToFile(FileName);
+    ///     //--- Display image
+    ///     Image1.Picture.LoadFromStream(Stream);
+    ///   finally
+    ///     Data.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
     function Creative(ParamProc: TProc<TUpscaleCreative>): TResults; overload;
+    /// <summary>
+    /// Takes images between 64x64 and 1 megapixel and upscales them all the way to 4K resolution. Put more generally, it can upscale images ~20-40x times while preserving, and often enhancing, quality. Creative Upscale works best on highly degraded images and is not for photos of 1mp or above as it performs heavy reimagining (controlled by creativity scale).
+    /// <para>
+    /// NOTE: This method is <c>asynchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the prompt etc.
+    /// </param>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.StableImage.Upscale.Creative(
+    ///   procedure (Params: TUpscaleCreative)
+    ///   begin
+    ///     // Define parameters
+    ///   end,
+    ///
+    ///   function : TAsynResults
+    ///   begin
+    ///     Result.Sender := Image1;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Data: TResults)
+    ///       begin
+    ///         // Handle success operation
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
     procedure Creative(ParamProc: TProc<TUpscaleCreative>; CallBacks: TFunc<TAsynResults>); overload;
-
+    /// <summary>
+    /// Our Fast Upscaler service enhances image resolution by 4x using predictive and generative AI. This lightweight and fast service (processing in ~1 second) is ideal for enhancing the quality of compressed images, making it suitable for social media posts and other applications.
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the prompt etc.
+    /// </param>
+    /// <returns>
+    /// Returns a <c>TStableImage</c> object that contains image base-64 generated.
+    /// </returns>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Data := Stability.StableImage.Upscale.Fast(
+    ///     procedure (Params: TUpscaleFast)
+    ///     begin
+    ///       Params.OutputFormat(png);
+    ///       // Move on to the other parameters.
+    ///     end);
+    ///   var Stream := Data.GetStream;
+    ///   try
+    ///     //--- Save image
+    ///     Data.SaveToFile(FileName);
+    ///     //--- Display image
+    ///     Image1.Picture.LoadFromStream(Stream);
+    ///   finally
+    ///     Data.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
     function Fast(ParamProc: TProc<TUpscaleFast>): TStableImage; overload;
+    /// <summary>
+    /// Our Fast Upscaler service enhances image resolution by 4x using predictive and generative AI. This lightweight and fast service (processing in ~1 second) is ideal for enhancing the quality of compressed images, making it suitable for social media posts and other applications.
+    /// <para>
+    /// NOTE: This method is <c>asynchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the prompt etc.
+    /// </param>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.StableImage.Upscale.Fast(
+    ///   procedure (Params: TUpscaleFast)
+    ///   begin
+    ///     // Define parameters
+    ///   end,
+    ///
+    ///   function : TAsynStableImage
+    ///   begin
+    ///     Result.Sender := Image1;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Image: TStableImage)
+    ///       begin
+    ///         // Handle success operation
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
     procedure Fast(ParamProc: TProc<TUpscaleFast>; CallBacks: TFunc<TAsynStableImage>); overload;
   end;
 
@@ -199,6 +466,11 @@ end;
 
 { TUpscaleRoute }
 
+function TUpscaleRoute.Conservative(ParamProc: TProc<TUpscaleConservative>): TStableImage;
+begin
+  Result := API.PostForm<TStableImage, TUpscaleConservative>('v2beta/stable-image/upscale/conservative', ParamProc);
+end;
+
 procedure TUpscaleRoute.Conservative(ParamProc: TProc<TUpscaleConservative>;
   CallBacks: TFunc<TAsynStableImage>);
 begin
@@ -216,6 +488,11 @@ begin
   finally
     Free;
   end;
+end;
+
+function TUpscaleRoute.Creative(ParamProc: TProc<TUpscaleCreative>): TResults;
+begin
+  Result := API.PostForm<TResults, TUpscaleCreative>('v2beta/stable-image/upscale/creative', ParamProc);
 end;
 
 procedure TUpscaleRoute.Creative(ParamProc: TProc<TUpscaleCreative>;
@@ -237,6 +514,11 @@ begin
   end;
 end;
 
+function TUpscaleRoute.Fast(ParamProc: TProc<TUpscaleFast>): TStableImage;
+begin
+  Result := API.PostForm<TStableImage, TUpscaleFast>('v2beta/stable-image/upscale/fast', ParamProc);
+end;
+
 procedure TUpscaleRoute.Fast(ParamProc: TProc<TUpscaleFast>;
   CallBacks: TFunc<TAsynStableImage>);
 begin
@@ -254,21 +536,6 @@ begin
   finally
     Free;
   end;
-end;
-
-function TUpscaleRoute.Conservative(ParamProc: TProc<TUpscaleConservative>): TStableImage;
-begin
-  Result := API.PostForm<TStableImage, TUpscaleConservative>('v2beta/stable-image/upscale/conservative', ParamProc);
-end;
-
-function TUpscaleRoute.Creative(ParamProc: TProc<TUpscaleCreative>): TResults;
-begin
-  Result := API.PostForm<TResults, TUpscaleCreative>('v2beta/stable-image/upscale/creative', ParamProc);
-end;
-
-function TUpscaleRoute.Fast(ParamProc: TProc<TUpscaleFast>): TStableImage;
-begin
-  Result := API.PostForm<TStableImage, TUpscaleFast>('v2beta/stable-image/upscale/fast', ParamProc);
 end;
 
 end.

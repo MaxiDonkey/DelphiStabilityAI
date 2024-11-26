@@ -1080,7 +1080,7 @@ type
     /// </para>
     /// </summary>
     /// <param name="ParamProc">
-    /// A procedure used to configure the parameters for the image creation, such as image, the the format of the output image etc.
+    /// A procedure used to configure the parameters for the image creation, such as image, the format of the output image etc.
     /// </param>
     /// <param name="CallBacks">
     /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
