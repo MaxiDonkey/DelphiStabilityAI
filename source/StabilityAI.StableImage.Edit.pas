@@ -238,7 +238,7 @@ type
     /// <param name="Value">
     /// string [1 .. 10000] characters
     /// </param>
-    function SearchPrompt(const Value: string): TSearchAndReplace;
+    function SelectPrompt(const Value: string): TSearchAndReplace;
     /// <summary>
     /// A blurb of text describing what you do not wish to see in the output image.
     /// </summary>
@@ -539,26 +539,710 @@ type
   end;
 
   TEditRoute = class(TStabilityAIAPIRoute)
+    /// <summary>
+    /// The Erase service allows you to eliminate undesired elements, like imperfections on portraits or objects on desks, by utilizing image masking techniques.
+    /// <para>
+    /// The mask can be supplied in one of two forms:
+    /// </para>
+    /// <para>
+    /// - By explicitly providing a separate image through the <c>mask</c> parameter.
+    /// </para>
+    /// <para>
+    /// - By extracting it from the alpha channel of the <c>image</c> parameter.
+    /// </para>
+    /// <para>
+    /// The resolution of the generated image will be 4 megapixels.
+    /// </para>
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the mask, the seed, the the format of the output image.
+    /// </param>
+    /// <returns>
+    /// Returns a <c>TStableImage</c> object that contains image base-64 generated.
+    /// </returns>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// The <c>Erase</c> method sends an image editing request to remove unwanted objects from an image, such as blemishes on portraits or items on desks, using image masks.  The returned <c>TStableImage</c> object contains the model's edited response, including multiple choices if available.
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Data := Stability.StableImage.Edit.Erase(
+    ///     procedure (Params: TErase)
+    ///     begin
+    ///       Params.OutputFormat(png);
+    ///       // Move on to the other parameters.
+    ///     end);
+    ///   var Stream := Data.GetStream;
+    ///   try
+    ///     //--- Save image
+    ///     Data.SaveToFile(FileName);
+    ///     //--- Display image
+    ///     Image1.Picture.LoadFromStream(Stream);
+    ///   finally
+    ///     Data.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
     function Erase(ParamProc: TProc<TErase>): TStableImage; overload;
+    /// <summary>
+    /// The Erase service allows you to eliminate undesired elements, like imperfections on portraits or objects on desks, by utilizing image masking techniques.
+    /// <para>
+    /// The mask can be supplied in one of two forms:
+    /// </para>
+    /// <para>
+    /// - By explicitly providing a separate image through the <c>mask</c> parameter.
+    /// </para>
+    /// <para>
+    /// - By extracting it from the alpha channel of the <c>image</c> parameter.
+    /// </para>
+    /// <para>
+    /// The resolution of the generated image will be 4 megapixels.
+    /// </para>
+    /// <para>
+    /// NOTE: This method is <c>asynchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the mask, the seed, the the format of the output image.
+    /// </param>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// The <c>Erase</c> method sends an image editing request to remove unwanted objects from an image, such as blemishes on portraits or items on desks, using image masks.
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.StableImage.Edit.Erase(
+    ///   procedure (Params: TErase)
+    ///   begin
+    ///     // Define parameters
+    ///   end,
+    ///
+    ///   function : TAsynStableImage
+    ///   begin
+    ///     Result.Sender := Image1;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Image: TStableImage)
+    ///       begin
+    ///         // Handle success operation
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
     procedure Erase(ParamProc: TProc<TErase>; CallBacks: TFunc<TAsynStableImage>); overload;
-
+    /// <summary>
+    /// Intelligently modify images by filling in or replacing specified areas with new content based on the content of a "mask" image.
+    /// <para>
+    /// The mask is provided in one of two ways:
+    /// </para>
+    /// <para>
+    /// - Explicitly passing in a separate image via the mask parameter
+    /// </para>
+    /// <para>
+    /// - Derived from the alpha channel of the image parameter.
+    /// </para>
+    /// <para>
+    /// The resolution of the generated image will be 4 megapixels.
+    /// </para>
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the mask, the seed, the the format of the output image.
+    /// </param>
+    /// <returns>
+    /// Returns a <c>TStableImage</c> object that contains image base-64 generated.
+    /// </returns>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Data := Stability.StableImage.Edit.Inpaint(
+    ///     procedure (Params: TInpaint)
+    ///     begin
+    ///       Params.OutputFormat(png);
+    ///       // Move on to the other parameters.
+    ///     end);
+    ///   var Stream := Data.GetStream;
+    ///   try
+    ///     //--- Save image
+    ///     Data.SaveToFile(FileName);
+    ///     //--- Display image
+    ///     Image1.Picture.LoadFromStream(Stream);
+    ///   finally
+    ///     Data.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
     function Inpaint(ParamProc: TProc<TInpaint>): TStableImage; overload;
+    /// <summary>
+    /// Intelligently modify images by filling in or replacing specified areas with new content based on the content of a "mask" image.
+    /// <para>
+    /// The mask is provided in one of two ways:
+    /// </para>
+    /// <para>
+    /// - Explicitly passing in a separate image via the mask parameter
+    /// </para>
+    /// <para>
+    /// - Derived from the alpha channel of the image parameter.
+    /// </para>
+    /// <para>
+    /// The resolution of the generated image will be 4 megapixels.
+    /// </para>
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the mask, the seed, the the format of the output image.
+    /// </param>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// The <c>Erase</c> method sends an image editing request to remove unwanted objects from an image, such as blemishes on portraits or items on desks, using image masks.
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.StableImage.Edit.Inpaint(
+    ///   procedure (Params: TInpaint)
+    ///   begin
+    ///     // Define parameters
+    ///   end,
+    ///
+    ///   function : TAsynStableImage
+    ///   begin
+    ///     Result.Sender := Image1;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Image: TStableImage)
+    ///       begin
+    ///         // Handle success operation
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
     procedure Inpaint(ParamProc: TProc<TInpaint>; CallBacks: TFunc<TAsynStableImage>); overload;
-
+    /// <summary>
+    /// The Outpaint service inserts additional content in an image to fill in the space in any direction.
+    /// Compared to other automated or manual attempts to expand the content in an image, the Outpaint service
+    /// should minimize artifacts and signs that the original image has been edited.
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the the format of the output image etc.
+    /// </param>
+    /// <returns>
+    /// Returns a <c>TStableImage</c> object that contains image base-64 generated.
+    /// </returns>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Data := Stability.StableImage.Edit.Outpaint(
+    ///     procedure (Params: TOutpaint)
+    ///     begin
+    ///       Params.OutputFormat(png);
+    ///       // Move on to the other parameters.
+    ///     end);
+    ///   var Stream := Data.GetStream;
+    ///   try
+    ///     //--- Save image
+    ///     Data.SaveToFile(FileName);
+    ///     //--- Display image
+    ///     Image1.Picture.LoadFromStream(Stream);
+    ///   finally
+    ///     Data.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
     function Outpaint(ParamProc: TProc<TOutpaint>): TStableImage; overload;
+    /// <summary>
+    /// The Outpaint service inserts additional content in an image to fill in the space in any direction.
+    /// Compared to other automated or manual attempts to expand the content in an image, the Outpaint service
+    /// should minimize artifacts and signs that the original image has been edited.
+    /// <para>
+    /// NOTE: This method is <c>asynchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the the format of the output image etc.
+    /// </param>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.StableImage.Edit.Outpaint(
+    ///   procedure (Params: TOutpaint)
+    ///   begin
+    ///     // Define parameters
+    ///   end,
+    ///
+    ///   function : TAsynStableImage
+    ///   begin
+    ///     Result.Sender := Image1;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Image: TStableImage)
+    ///       begin
+    ///         // Handle success operation
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
     procedure Outpaint(ParamProc: TProc<TOutpaint>; CallBacks: TFunc<TAsynStableImage>); overload;
-
+    /// <summary>
+    /// The Search and Replace service is a specific version of inpainting that does not require a mask.
+    /// Instead, users can leverage a <c>search_prompt</c> to identify an object in simple language to be replaced.
+    /// The service will automatically segment the object and replace it with the object requested in the prompt.
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the the format of the output image etc.
+    /// </param>
+    /// <returns>
+    /// Returns a <c>TStableImage</c> object that contains image base-64 generated.
+    /// </returns>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Data := Stability.StableImage.Edit.SearchAndReplace(
+    ///     procedure (Params: TSearchAndReplace)
+    ///     begin
+    ///       Params.OutputFormat(png);
+    ///       // Move on to the other parameters.
+    ///     end);
+    ///   var Stream := Data.GetStream;
+    ///   try
+    ///     //--- Save image
+    ///     Data.SaveToFile(FileName);
+    ///     //--- Display image
+    ///     Image1.Picture.LoadFromStream(Stream);
+    ///   finally
+    ///     Data.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
     function SearchAndReplace(ParamProc: TProc<TSearchAndReplace>): TStableImage; overload;
+    /// <summary>
+    /// The Search and Replace service is a specific version of inpainting that does not require a mask.
+    /// Instead, users can leverage a <c>search_prompt</c> to identify an object in simple language to be replaced.
+    /// The service will automatically segment the object and replace it with the object requested in the prompt.
+    /// <para>
+    /// NOTE: This method is <c>asynchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the the format of the output image etc.
+    /// </param>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.StableImage.Edit.SearchAndReplace(
+    ///   procedure (Params: TSearchAndReplace)
+    ///   begin
+    ///     // Define parameters
+    ///   end,
+    ///
+    ///   function : TAsynStableImage
+    ///   begin
+    ///     Result.Sender := Image1;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Image: TStableImage)
+    ///       begin
+    ///         // Handle success operation
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
     procedure SearchAndReplace(ParamProc: TProc<TSearchAndReplace>; CallBacks: TFunc<TAsynStableImage>); overload;
-
+    /// <summary>
+    /// The Search and Recolor service provides the ability to change the color of a specific object in
+    /// an image using a prompt. This service is a specific version of inpainting that does not require
+    /// a mask. The Search and Recolor service will automatically segment the object and recolor it
+    /// using the colors requested in the prompt.
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the the format of the output image etc.
+    /// </param>
+    /// <returns>
+    /// Returns a <c>TStableImage</c> object that contains image base-64 generated.
+    /// </returns>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Data := Stability.StableImage.Edit.SearchAndRecolor(
+    ///     procedure (Params: TSearchAndRecolor)
+    ///     begin
+    ///       Params.OutputFormat(png);
+    ///       // Move on to the other parameters.
+    ///     end);
+    ///   var Stream := Data.GetStream;
+    ///   try
+    ///     //--- Save image
+    ///     Data.SaveToFile(FileName);
+    ///     //--- Display image
+    ///     Image1.Picture.LoadFromStream(Stream);
+    ///   finally
+    ///     Data.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
     function SearchAndRecolor(ParamProc: TProc<TSearchAndRecolor>): TStableImage; overload;
+    /// <summary>
+    /// The Search and Recolor service provides the ability to change the color of a specific object in
+    /// an image using a prompt. This service is a specific version of inpainting that does not require
+    /// a mask. The Search and Recolor service will automatically segment the object and recolor it
+    /// using the colors requested in the prompt.
+    /// <para>
+    /// NOTE: This method is <c>asynchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the the format of the output image etc.
+    /// </param>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.StableImage.Edit.SearchAndRecolor(
+    ///   procedure (Params: TSearchAndRecolor)
+    ///   begin
+    ///     // Define parameters
+    ///   end,
+    ///
+    ///   function : TAsynStableImage
+    ///   begin
+    ///     Result.Sender := Image1;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Image: TStableImage)
+    ///       begin
+    ///         // Handle success operation
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
     procedure SearchAndRecolor(ParamProc: TProc<TSearchAndRecolor>; CallBacks: TFunc<TAsynStableImage>); overload;
-
+    /// <summary>
+    /// The Remove Background service accurately segments the foreground from an image and implements and removes the background.
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, etc
+    /// </param>
+    /// <returns>
+    /// Returns a <c>TStableImage</c> object that contains image base-64 generated.
+    /// </returns>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Data := Stability.StableImage.Edit.RemoveBackground(
+    ///     procedure (Params: TRemoveBackground)
+    ///     begin
+    ///       Params.OutputFormat(png);
+    ///       // Move on to the other parameters.
+    ///     end);
+    ///   var Stream := Data.GetStream;
+    ///   try
+    ///     //--- Save image
+    ///     Data.SaveToFile(FileName);
+    ///     //--- Display image
+    ///     Image1.Picture.LoadFromStream(Stream);
+    ///   finally
+    ///     Data.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
     function RemoveBackground(ParamProc: TProc<TRemoveBackground>): TStableImage; overload;
+    /// <summary>
+    /// The Remove Background service accurately segments the foreground from an image and implements and removes the background.
+    /// <para>
+    /// NOTE: This method is <c>asynchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the the format of the output image etc.
+    /// </param>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.StableImage.Edit.RemoveBackground(
+    ///   procedure (Params: TRemoveBackground)
+    ///   begin
+    ///     // Define parameters
+    ///   end,
+    ///
+    ///   function : TAsynStableImage
+    ///   begin
+    ///     Result.Sender := Image1;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Image: TStableImage)
+    ///       begin
+    ///         // Handle success operation
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
     procedure RemoveBackground(ParamProc: TProc<TRemoveBackground>; CallBacks: TFunc<TAsynStableImage>); overload;
-
-    function ReplaceBackgroundAndRelight(ParamProc: TProc<TReplaceBackgroundAndRelight>): TStableImage; overload;
-    procedure ReplaceBackgroundAndRelight(ParamProc: TProc<TReplaceBackgroundAndRelight>; CallBacks: TFunc<TAsynStableImage>); overload;
+    /// <summary>
+    /// The Replace Background and Relight edit service lets users swap backgrounds with AI-generated or uploaded images while adjusting lighting to match the subject. This new API provides a streamlined image editing solution and can serve e-commerce, real estate, photography, and creative projects.
+    /// <para>
+    /// Some of the things you can do include:
+    /// </para>
+    /// <para>
+    /// - Background Replacement: Remove existing background and add new ones.
+    /// </para>
+    /// <para>
+    /// - AI Background Generation: Create new backgrounds using AI generated images based on prompts.
+    /// </para>
+    /// <para>
+    /// - Relighting: Adjust lighting in images that are under or overexposed.
+    /// </para>
+    /// <para>
+    /// - Flexible Inputs: Use your own background image or generate one.
+    /// </para>
+    /// <para>
+    /// - Lighting Adjustments: Modify light reference, direction, and strength.
+    /// </para>
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, etc
+    /// </param>
+    /// <returns>
+    /// Returns a <c>TResults</c> object that contains ID of the task.
+    /// </returns>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Data := Stability.StableImage.Edit.ReplaceBackgroundAndRelight(
+    ///     procedure (Params: TReplaceBackgroundAndRelight)
+    ///     begin
+    ///       Params.OutputFormat(png);
+    ///       // Move on to the other parameters.
+    ///     end);
+    ///   try
+    ///     ShowMessage(Data.Id);
+    ///     // Display the Id
+    ///     // e.g. ea771536f066b7fd03d62384581982ecd8b54a932a6378d5809d43f6e5aa789a
+    ///   finally
+    ///     Data.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
+    function ReplaceBackgroundAndRelight(ParamProc: TProc<TReplaceBackgroundAndRelight>): TResults; overload;
+    /// <summary>
+    /// The Replace Background and Relight edit service lets users swap backgrounds with AI-generated or uploaded images while adjusting lighting to match the subject. This new API provides a streamlined image editing solution and can serve e-commerce, real estate, photography, and creative projects.
+    /// <para>
+    /// Some of the things you can do include:
+    /// </para>
+    /// <para>
+    /// - Background Replacement: Remove existing background and add new ones.
+    /// </para>
+    /// <para>
+    /// - AI Background Generation: Create new backgrounds using AI generated images based on prompts.
+    /// </para>
+    /// <para>
+    /// - Relighting: Adjust lighting in images that are under or overexposed.
+    /// </para>
+    /// <para>
+    /// - Flexible Inputs: Use your own background image or generate one.
+    /// </para>
+    /// <para>
+    /// - Lighting Adjustments: Modify light reference, direction, and strength.
+    /// </para>
+    /// <para>
+    /// NOTE: This method is <c>asynchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the the format of the output image etc.
+    /// </param>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.StableImage.Edit.ReplaceBackgroundAndRelight(
+    ///   procedure (Params: TReplaceBackgroundAndRelight)
+    ///   begin
+    ///     // Define parameters
+    ///   end,
+    ///
+    ///   function : TAsynResults
+    ///   begin
+    ///     Result.Sender := My_Object;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Job: TResults)
+    ///       begin
+    ///         // Handle success operation
+    ///         ShowMessage(Job.Id);
+    ///         // Display the Id
+    ///         // e.g. ea771536f066b7fd03d62384581982ecd8b54a932a6378d5809d43f6e5aa789a
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
+    procedure ReplaceBackgroundAndRelight(ParamProc: TProc<TReplaceBackgroundAndRelight>; CallBacks: TFunc<TAsynResults>); overload;
   end;
 
 implementation
@@ -567,6 +1251,11 @@ uses
   StabilityAI.NetEncoding.Base64, StabilityAI.Consts, StabilityAI.Async.Support;
 
 { TEditRoute }
+
+function TEditRoute.Erase(ParamProc: TProc<TErase>): TStableImage;
+begin
+  Result := API.PostForm<TStableImage, TErase>('v2beta/stable-image/edit/erase', ParamProc);
+end;
 
 procedure TEditRoute.Erase(ParamProc: TProc<TErase>; CallBacks: TFunc<TAsynStableImage>);
 begin
@@ -584,6 +1273,11 @@ begin
   finally
     Free;
   end;
+end;
+
+function TEditRoute.Inpaint(ParamProc: TProc<TInpaint>): TStableImage;
+begin
+  Result := API.PostForm<TStableImage, TInpaint>('v2beta/stable-image/edit/inpaint', ParamProc);
 end;
 
 procedure TEditRoute.Inpaint(ParamProc: TProc<TInpaint>; CallBacks: TFunc<TAsynStableImage>);
@@ -604,6 +1298,11 @@ begin
   end;
 end;
 
+function TEditRoute.Outpaint(ParamProc: TProc<TOutpaint>): TStableImage;
+begin
+  Result := API.PostForm<TStableImage, TOutpaint>('v2beta/stable-image/edit/outpaint', ParamProc);
+end;
+
 procedure TEditRoute.Outpaint(ParamProc: TProc<TOutpaint>; CallBacks: TFunc<TAsynStableImage>);
 begin
   with TAsynCallBackExec<TAsynStableImage, TStableImage>.Create(CallBacks) do
@@ -620,6 +1319,11 @@ begin
   finally
     Free;
   end;
+end;
+
+function TEditRoute.RemoveBackground(ParamProc: TProc<TRemoveBackground>): TStableImage;
+begin
+  Result := API.PostForm<TStableImage, TRemoveBackground>('v2beta/stable-image/edit/remove-background', ParamProc);
 end;
 
 procedure TEditRoute.RemoveBackground(ParamProc: TProc<TRemoveBackground>; CallBacks: TFunc<TAsynStableImage>);
@@ -640,24 +1344,35 @@ begin
   end;
 end;
 
+function TEditRoute.ReplaceBackgroundAndRelight(
+  ParamProc: TProc<TReplaceBackgroundAndRelight>): TResults;
+begin
+  Result := API.PostForm<TResults, TReplaceBackgroundAndRelight>('v2beta/stable-image/edit/replace-background-and-relight', ParamProc);
+end;
+
 procedure TEditRoute.ReplaceBackgroundAndRelight(
   ParamProc: TProc<TReplaceBackgroundAndRelight>;
-  CallBacks: TFunc<TAsynStableImage>);
+  CallBacks: TFunc<TAsynResults>);
 begin
-  with TAsynCallBackExec<TAsynStableImage, TStableImage>.Create(CallBacks) do
+  with TAsynCallBackExec<TAsynResults, TResults>.Create(CallBacks) do
   try
     Sender := Use.Param.Sender;
     OnStart := Use.Param.OnStart;
     OnSuccess := Use.Param.OnSuccess;
     OnError := Use.Param.OnError;
     Run(
-      function: TStableImage
+      function: TResults
       begin
         Result := Self.ReplaceBackgroundAndRelight(ParamProc);
       end);
   finally
     Free;
   end;
+end;
+
+function TEditRoute.SearchAndRecolor(ParamProc: TProc<TSearchAndRecolor>): TStableImage;
+begin
+  Result := API.PostForm<TStableImage, TSearchAndRecolor>('v2beta/stable-image/edit/search-and-recolor', ParamProc);
 end;
 
 procedure TEditRoute.SearchAndRecolor(ParamProc: TProc<TSearchAndRecolor>;
@@ -679,6 +1394,11 @@ begin
   end;
 end;
 
+function TEditRoute.SearchAndReplace(ParamProc: TProc<TSearchAndReplace>): TStableImage;
+begin
+  Result := API.PostForm<TStableImage, TSearchAndReplace>('v2beta/stable-image/edit/search-and-replace', ParamProc);
+end;
+
 procedure TEditRoute.SearchAndReplace(ParamProc: TProc<TSearchAndReplace>;
   CallBacks: TFunc<TAsynStableImage>);
 begin
@@ -696,42 +1416,6 @@ begin
   finally
     Free;
   end;
-end;
-
-function TEditRoute.Erase(ParamProc: TProc<TErase>): TStableImage;
-begin
-  Result := API.PostForm<TStableImage, TErase>('v2beta/stable-image/edit/erase', ParamProc);
-end;
-
-function TEditRoute.Inpaint(ParamProc: TProc<TInpaint>): TStableImage;
-begin
-  Result := API.PostForm<TStableImage, TInpaint>('v2beta/stable-image/edit/inpaint', ParamProc);
-end;
-
-function TEditRoute.Outpaint(ParamProc: TProc<TOutpaint>): TStableImage;
-begin
-  Result := API.PostForm<TStableImage, TOutpaint>('v2beta/stable-image/edit/outpaint', ParamProc);
-end;
-
-function TEditRoute.RemoveBackground(ParamProc: TProc<TRemoveBackground>): TStableImage;
-begin
-  Result := API.PostForm<TStableImage, TRemoveBackground>('v2beta/stable-image/edit/remove-background', ParamProc);
-end;
-
-function TEditRoute.ReplaceBackgroundAndRelight(
-  ParamProc: TProc<TReplaceBackgroundAndRelight>): TStableImage;
-begin
-  Result := API.PostForm<TStableImage, TReplaceBackgroundAndRelight>('v2beta/stable-image/edit/replace-background-and-relight', ParamProc);
-end;
-
-function TEditRoute.SearchAndRecolor(ParamProc: TProc<TSearchAndRecolor>): TStableImage;
-begin
-  Result := API.PostForm<TStableImage, TSearchAndRecolor>('v2beta/stable-image/edit/search-and-recolor', ParamProc);
-end;
-
-function TEditRoute.SearchAndReplace(ParamProc: TProc<TSearchAndReplace>): TStableImage;
-begin
-  Result := API.PostForm<TStableImage, TSearchAndReplace>('v2beta/stable-image/edit/search-and-replace', ParamProc);
 end;
 
 { TRemoveBackground }
@@ -852,9 +1536,9 @@ begin
   Result := Self;
 end;
 
-function TSearchAndReplace.SearchPrompt(const Value: string): TSearchAndReplace;
+function TSearchAndReplace.SelectPrompt(const Value: string): TSearchAndReplace;
 begin
-  AddField(Check('search_prompt', Value), Value);
+  AddField(Check('select_prompt', Value), Value);
   Result := Self;
 end;
 
