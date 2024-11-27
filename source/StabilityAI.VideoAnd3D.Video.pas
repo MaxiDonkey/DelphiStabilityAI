@@ -127,20 +127,198 @@ type
   end;
 
   /// <summary>
-  /// Manages asynchronous chat callBacks for a chat request using <c>TJobVideo</c> as the response type.
+  /// Manages asynchronous callBacks for a request using <c>TJobVideo</c> as the response type.
   /// </summary>
   /// <remarks>
-  /// The <c>TAsynJobVideo</c> type extends the <c>TJobVideo&gt;</c> record to handle the lifecycle of an asynchronous chat operation.
+  /// The <c>TAsynJobVideo</c> type extends the <c>TAsynParams&lt;TJobVideo&gt;</c> record to handle the lifecycle of an asynchronous chat operation.
   /// It provides event handlers that trigger at various stages, such as when the operation starts, completes successfully, or encounters an error.
   /// This structure facilitates non-blocking chat operations and is specifically tailored for scenarios where multiple choices from a chat model are required.
   /// </remarks>
   TAsynJobVideo = TAsynCallBack<TJobVideo>;
 
+  /// <summary>
+  /// The <c>TVideoRoute</c> class manages video generation processes using Stable Video Diffusion models.
+  /// </summary>
+  /// <remarks>
+  /// This class serves as the primary interface for generating videos from images or text-based prompts.
+  /// It provides both synchronous and asynchronous methods for video creation and result retrieval.
+  /// Use this class to handle video generation efficiently, including parameter setup and API communication.
+  /// </remarks>
   TVideoRoute = class(TStabilityAIAPIRoute)
+    /// <summary>
+    /// Generate a short video based on an initial image with Stable Video Diffusion, a latent video diffusion model.
+    /// <para>
+    /// After invoking this endpoint with the required parameters, use the id in the response to poll for results at the image-to-video/result/{id} endpoint. Rate-limiting or other errors may occur if you poll more than once every 10 seconds.
+    /// </para>
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the mask, the seed, the the format of the output image.
+    /// </param>
+    /// <returns>
+    /// Returns a <c>TJobVideo</c> object that contains then ID of the task.
+    /// </returns>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Data := Stability.VideoAnd3D.ImageToVideo.Generation(
+    ///     procedure (Params: TVideo)
+    ///     begin
+    ///       // Define parameters.
+    ///     end);
+    ///   try
+    ///     ShowMessage(Data.Id);
+    ///   finally
+    ///     Data.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
     function Generation(ParamProc: TProc<TVideo>): TJobVideo; overload;
+    /// <summary>
+    /// Generate a short video based on an initial image with Stable Video Diffusion, a latent video diffusion model.
+    /// <para>
+    /// After invoking this endpoint with the required parameters, use the id in the response to poll for results at the image-to-video/result/{id} endpoint. Rate-limiting or other errors may occur if you poll more than once every 10 seconds.
+    /// </para>
+    /// <para>
+    /// NOTE: This method is <c>asynchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the the format of the output image etc.
+    /// </param>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.VideoAnd3D.ImageToVideo.Generation(
+    ///   procedure (Params: TVideo)
+    ///   begin
+    ///     // Define parameters
+    ///   end,
+    ///
+    ///   function : TAsynJobVideo
+    ///   begin
+    ///     Result.Sender := my_obj;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Data: TJobVideo)
+    ///       begin
+    ///         // Handle success operation
+    ///         ShowMessage(Data.Id);
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
     procedure Generation(ParamProc: TProc<TVideo>; CallBacks: TFunc<TAsynJobVideo>); overload;
-
+    /// <summary>
+    /// Fetch the result of an image-to-video generation by ID.
+    /// <para>
+    /// Make sure to use the same API key to fetch the generation result that you used to create the generation, otherwise you will receive a 404 response.
+    /// </para>
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ResultId">
+    /// The id of a generation, typically used for async generations, that can be used to check the status of the generation or retrieve the result.
+    /// <para>
+    /// string = 64 characters
+    /// </para>
+    /// <para>
+    /// - Example: d4fb4aa8301aee0b368a41b3c0a78018dfc28f1f959a3666be2e6951408fb8e3
+    /// </para>
+    /// <para>
+    /// - Results are stored for 24 hours after generation. After that, the results are deleted and you will need to re-generate your video.
+    /// </para>
+    /// </param>
+    /// <returns>
+    /// Returns a <c>TResults</c> object that contains <c>Id</c>, <c>Status</c> and and possibly a <c>video</c>.
+    /// </returns>
+    /// <remarks>
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Fetch := Stability.VideoAnd3D.ImageToVideo.Fetch(ID);
+    ///   try
+    ///     if not (Fetch.Status = 'in-progress') then
+    ///       //The video is loaded
+    ///       Fetch.SaveToFile('file as .mp4')
+    ///   finally
+    ///     Fetch.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
     function Fetch(const ResultId: string): TResults; overload;
+    /// <summary>
+    /// Fetch the result of an image-to-video generation by ID.
+    /// <para>
+    /// Make sure to use the same API key to fetch the generation result that you used to create the generation, otherwise you will receive a 404 response.
+    /// </para>
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ResultId">
+    /// The id of a generation, typically used for async generations, that can be used to check the status of the generation or retrieve the result.
+    /// <para>
+    /// string = 64 characters
+    /// </para>
+    /// <para>
+    /// Example: d4fb4aa8301aee0b368a41b3c0a78018dfc28f1f959a3666be2e6951408fb8e3
+    /// </para>
+    /// <para>
+    /// Results are stored for 24 hours after generation. After that, the results are deleted.
+    /// </para>
+    /// </param>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <remarks>
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.VideoAnd3D.ImageToVideo.Fetch(Id,
+    ///   function : TAsynResults
+    ///   begin
+    ///     Result.Sender := my_object;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Data: TResults)
+    ///       begin
+    ///         // Handle success operation
+    ///         Data.SaveToFile('file as .mp4')
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
     procedure Fetch(const ResultId: string; CallBacks: TFunc<TAsynResults>); overload;
   end;
 
@@ -193,6 +371,11 @@ end;
 
 { TVideoRoute }
 
+function TVideoRoute.Fetch(const ResultId: string): TResults;
+begin
+  Result := API.Get<TResults>('v2beta/image-to-video/result/' + ResultId);
+end;
+
 procedure TVideoRoute.Fetch(const ResultId: string; CallBacks: TFunc<TAsynResults>);
 begin
   with TAsynCallBackExec<TAsynResults, TResults>.Create(CallBacks) do
@@ -209,6 +392,11 @@ begin
   finally
     Free;
   end;
+end;
+
+function TVideoRoute.Generation(ParamProc: TProc<TVideo>): TJobVideo;
+begin
+  Result := API.PostForm<TJobVideo, TVideo>('v2beta/image-to-video', ParamProc);
 end;
 
 procedure TVideoRoute.Generation(ParamProc: TProc<TVideo>;
@@ -228,16 +416,6 @@ begin
   finally
     Free;
   end;
-end;
-
-function TVideoRoute.Fetch(const ResultId: string): TResults;
-begin
-  Result := API.Get<TResults>('v2beta/image-to-video/result/' + ResultId);
-end;
-
-function TVideoRoute.Generation(ParamProc: TProc<TVideo>): TJobVideo;
-begin
-  Result := API.PostForm<TJobVideo, TVideo>('v2beta/image-to-video', ParamProc);
 end;
 
 end.

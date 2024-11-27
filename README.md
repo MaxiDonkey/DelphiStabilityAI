@@ -48,6 +48,7 @@ ___
     - [Style](#Style)
 - [Results](#Results)
 - [3D](#3D)
+- [Video](#Video)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -1112,6 +1113,13 @@ Stable Fast 3D generates high-quality 3D assets from a single 2D input image.
 ```
 
 Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/3D/paths/~1v2beta~13d~1stable-fast-3d/post)
+
+<br/>
+
+# Video
+
+Use [**Stable Video Diffusion**](https://static1.squarespace.com/static/6213c340453c3f502425776e/t/655ce779b9d47d342a93c890/1700587395994/stable_video_diffusion.pdf), a latent video diffusion model, to generate a short video from an initial image.
+- After calling this endpoint with the required parameters, retrieve the `ID` from the response to check the results at the `image-to-video/result/{id}` endpoint. Be sure not to poll this endpoint more than once every 10 seconds to avoid errors or rate-limiting issues.
 
 <br/>
 

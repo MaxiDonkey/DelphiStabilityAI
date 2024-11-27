@@ -14,7 +14,8 @@ interface
 
 uses
   System.SysUtils, System.Classes, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Controls, Vcl.Forms,
-  StabilityAI.Common, StabilityAI.Version1.SDXL1AndSD1_6, StabilityAI.VideoAnd3D.Stable3D;
+  StabilityAI.Common, StabilityAI.Version1.SDXL1AndSD1_6, StabilityAI.VideoAnd3D.Stable3D,
+  StabilityAI.VideoAnd3D.Video;
 
 type
   TVCLStabilitySender = class
@@ -37,6 +38,7 @@ type
   procedure Display(Sender: TObject; Result: TArtifacts); overload;
   procedure Display(Sender: TObject; Value: TResults); overload;
   procedure Display(Sender: TObject; Value: TModel3D); overload;
+  procedure Display(Sender: TObject; Value: TJobVideo); overload;
 
 var
   StabilityResult: TVCLStabilitySender = nil;
@@ -61,7 +63,10 @@ begin
   try
     if not T.FileName.IsEmpty then
       Result.SaveToFile(T.FileName);
-    T.Image. Picture.LoadFromStream(Stream);
+    Display(Sender, 'Save to file : ' + T.FileName);
+    {--- Display only images }
+    if not Result.Image.IsEmpty then
+      T.Image.Picture.LoadFromStream(Stream);
     Display(Sender, 'Generation ended successfully');
   finally
     Stream.Free;
@@ -75,7 +80,7 @@ begin
   try
     if not T.FileName.IsEmpty then
       Result.SaveToFile(T.FileName);
-    T.Image. Picture.LoadFromStream(Stream);
+    T.Image.Picture.LoadFromStream(Stream);
     Display(Sender, 'Generation ended successfully');
   finally
     Stream.Free;
@@ -107,6 +112,11 @@ begin
   var T := Sender as TVCLStabilitySender;
   Value.SaveToFile(T.FileName);
   Display(Sender, 'Model 3d : ' + T.FileName);
+end;
+
+procedure Display(Sender: TObject; Value: TJobVideo);
+begin
+  Display(Sender, Value.Id);
 end;
 
 { TVCLStabilitySender }

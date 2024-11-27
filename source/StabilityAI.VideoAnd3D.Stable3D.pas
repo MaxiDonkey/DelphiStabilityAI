@@ -160,7 +160,7 @@ type
   end;
 
   /// <summary>
-  /// Manages asynchronous chat callBacks for a chat request using <c>TModel3D</c> as the response type.
+  /// Manages asynchronous callBacks for a request using <c>TAsynParams&lt;TModel3D&gt;</c> as the response type.
   /// </summary>
   /// <remarks>
   /// The <c>TAsynModel3D</c> type extends the <c>TModel3D</c> record to handle the lifecycle of an asynchronous chat operation.
@@ -169,6 +169,25 @@ type
   /// </remarks>
   TAsynModel3D = TAsynCallBack<TModel3D>;
 
+  /// <summary>
+  /// The <c>TModel3DRoute</c> class is a specialized API route class designed for interacting with Stable Fast 3D APIs.
+  /// </summary>
+  /// <remarks>
+  /// <para>
+  /// This class provides methods to generate high-quality 3D assets from single 2D input images. It supports both synchronous
+  /// and asynchronous operations, allowing seamless integration into applications that require either immediate results or
+  /// non-blocking execution.
+  /// </para>
+  /// <para>
+  /// The synchronous <c>Fast3D</c> method processes the 2D input and directly returns a 3D model.
+  /// For asynchronous use cases, an overload of the <c>Fast3D</c> method accepts callback functions to handle
+  /// success, error, and start events, enabling efficient handling of long-running operations.
+  /// </para>
+  /// <para>
+  /// The generated 3D models are returned as glTF assets in binary format, including the required buffers, images, and JSON.
+  /// These outputs are compatible with modern 3D modeling tools and workflows.
+  /// </para>
+  /// </remarks>
   TModel3DRoute = class(TStabilityAIAPIRoute)
     /// <summary>
     /// Stable Fast 3D generates high-quality 3D assets from a single 2D input image.
@@ -194,24 +213,69 @@ type
     /// <remarks>
     /// <code>
     ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
-    ///   var Data := Stability.StableImage.Edit.Erase(
-    ///     procedure (Params: TErase)
+    ///   var Data := Stability.VideoAnd3D.Model3D.Fast3D(
+    ///     procedure (Params: TStable3D)
     ///     begin
-    ///       Params.OutputFormat(png);
-    ///       // Move on to the other parameters.
+    ///       // Define parameters.
     ///     end);
     ///   var Stream := Data.GetStream;
     ///   try
-    ///     //--- Save image
+    ///     //--- Save 3d model as .gLTF file
     ///     Data.SaveToFile(FileName);
-    ///     //--- Display image
-    ///     Image1.Picture.LoadFromStream(Stream);
     ///   finally
     ///     Data.Free;
+    ///     Stream.Free;
     ///   end;
     /// </code>
     /// </remarks>
     function Fast3D(ParamProc: TProc<TStable3D>): TModel3D; overload;
+    /// <summary>
+    /// Stable Fast 3D generates high-quality 3D assets from a single 2D input image.
+    /// <para>
+    /// NOTE: This method is <c>asynchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the the format of the output image etc.
+    /// </param>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.VideoAnd3D.Model3D.Fast3D(
+    ///   procedure (Params: TStable3D)
+    ///   begin
+    ///     // Define parameters
+    ///   end,
+    ///
+    ///   function : TAsynModel3D
+    ///   begin
+    ///     Result.Sender := Image1;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Data: TModel3D)
+    ///       begin
+    ///         // Handle success operation
+    ///         //--- Save 3d model as .gLTF file
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
     procedure Fast3D(ParamProc: TProc<TStable3D>; CallBacks: TFunc<TAsynModel3D>); overload;
   end;
 

@@ -496,20 +496,20 @@ type
   end;
 
   /// <summary>
-  /// Manages asynchronous chat callBacks for a chat request using <c>TStableImage</c> as the response type.
+  /// Manages asynchronous callBacks for a request using <c>TStableImage</c> as the response type.
   /// </summary>
   /// <remarks>
-  /// The <c>TAsynStableImage</c> type extends the <c>TStableImage;</c> record to handle the lifecycle of an asynchronous chat operation.
+  /// The <c>TAsynStableImage</c> type extends the <c>TAsynParams&lt;TStableImage&gt;</c> record to handle the lifecycle of an asynchronous chat operation.
   /// It provides event handlers that trigger at various stages, such as when the operation starts, completes successfully, or encounters an error.
   /// This structure facilitates non-blocking chat operations and is specifically tailored for scenarios where multiple choices from a chat model are required.
   /// </remarks>
   TAsynStableImage = TAsynCallBack<TStableImage>;
 
   /// <summary>
-  /// Manages asynchronous chat callBacks for a chat request using <c>TResults</c> as the response type.
+  /// Manages asynchronous callBacks for a request using <c>TAsynParams&lt;TResults&gt;</c> as the response type.
   /// </summary>
   /// <remarks>
-  /// The <c>TAsynResults</c> type extends the <c>TResults;</c> record to handle the lifecycle of an asynchronous chat operation.
+  /// The <c>TAsynResults</c> type extends the <c>TResults</c> record to handle the lifecycle of an asynchronous chat operation.
   /// It provides event handlers that trigger at various stages, such as when the operation starts, completes successfully, or encounters an error.
   /// This structure facilitates non-blocking chat operations and is specifically tailored for scenarios where multiple choices from a chat model are required.
   /// </remarks>

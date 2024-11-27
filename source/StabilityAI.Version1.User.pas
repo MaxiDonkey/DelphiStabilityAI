@@ -98,7 +98,7 @@ type
   end;
 
   /// <summary>
-  /// Manages asynchronous chat callBacks for a chat request using <c>TAccountDetails</c> as the response type.
+  /// Manages asynchronous callBacks for a request using <c>TAccountDetails</c> as the response type.
   /// </summary>
   /// <remarks>
   /// The <c>TAsynAccountDetails</c> type extends the <c>TAsynParams&lt;TAccountDetails&gt;</c> record to handle the lifecycle of an asynchronous chat operation.
@@ -108,10 +108,10 @@ type
   TAsynAccountDetails = TAsynCallBack<TAccountDetails>;
 
   /// <summary>
-  /// Manages asynchronous chat callBacks for a chat request using <c>TAccountBalance</c> as the response type.
+  /// Manages asynchronous callBacks for a request using <c>TAccountBalance</c> as the response type.
   /// </summary>
   /// <remarks>
-  /// The <c>TAsynAccountBalance</c> type extends the <c>TAccountBalance&gt;</c> record to handle the lifecycle of an asynchronous chat operation.
+  /// The <c>TAsynAccountBalance</c> type extends the <c>TAsynParams&lt;TAccountBalance&gt;</c> record to handle the lifecycle of an asynchronous chat operation.
   /// It provides event handlers that trigger at various stages, such as when the operation starts, completes successfully, or encounters an error.
   /// This structure facilitates non-blocking chat operations and is specifically tailored for scenarios where multiple choices from a chat model are required.
   /// </remarks>

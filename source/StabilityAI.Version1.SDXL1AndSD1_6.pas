@@ -694,7 +694,7 @@ type
   end;
 
   /// <summary>
-  /// Manages asynchronous chat callBacks for a chat request using <c>TArtifacts</c> as the response type.
+  /// Manages asynchronous callBacks for a request using <c>TArtifacts</c> as the response type.
   /// </summary>
   /// <remarks>
   /// The <c>TAsynArtifacts</c> type extends the <c>TAsynParams&lt;TArtifacts&gt;</c> record to handle the lifecycle of an asynchronous chat operation.
