@@ -51,7 +51,7 @@ ___
 - [Video](#Video)
 - [Other Features of Version 1](#Other-Features-of-Version-1)
     - [Model list](#Model-list)
-    - [User account](#User account)
+    - [User account](#User-account)
     - [User balance](#User-balance)
 - [New features announced](#New-features-announced)
 - [Contributing](#contributing)
