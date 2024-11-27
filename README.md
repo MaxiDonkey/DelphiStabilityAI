@@ -1223,6 +1223,8 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
 
 ## User balance
 
+Retrieve the credit balance for the account or organization linked to the provided API key.
+
 ```Pascal
 //uses 
 //  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
