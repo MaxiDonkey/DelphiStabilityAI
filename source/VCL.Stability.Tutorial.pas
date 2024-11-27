@@ -15,7 +15,7 @@ interface
 uses
   System.SysUtils, System.Classes, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Controls, Vcl.Forms,
   StabilityAI.Common, StabilityAI.Version1.SDXL1AndSD1_6, StabilityAI.VideoAnd3D.Stable3D,
-  StabilityAI.VideoAnd3D.Video, StabilityAI.Version1.Engines;
+  StabilityAI.VideoAnd3D.Video, StabilityAI.Version1.Engines, StabilityAI.Version1.User;
 
 type
   TVCLStabilitySender = class
@@ -40,6 +40,7 @@ type
   procedure Display(Sender: TObject; Value: TModel3D); overload;
   procedure Display(Sender: TObject; Value: TJobVideo); overload;
   procedure Display(Sender: TObject; Value: TEngines); overload;
+  procedure Display(Sender: TObject; Value: TAccountDetails); overload;
 
 var
   StabilityResult: TVCLStabilitySender = nil;
@@ -48,7 +49,7 @@ implementation
 
 procedure Start(Sender: TObject);
 begin
-  Display(Sender, 'Request dended. Please wait...');
+  Display(Sender, 'Request sended. Please wait...');
 end;
 
 procedure Display(Sender: TObject; Value: string);
@@ -124,6 +125,20 @@ procedure Display(Sender: TObject; Value: TEngines);
 begin
   for var Item in Value.Result do
     Display(Sender, Item.Name);
+end;
+
+procedure Display(Sender: TObject; Value: TAccountDetails);
+begin
+  Display(Sender, Value.Id);
+  Display(Sender, Value.Email);
+  Display(Sender, Value.ProfilePicture);
+  for var Item in Value.Organizations do
+    begin
+      Display(Sender, Item.Id);
+      Display(Sender, Item.Name);
+      Display(Sender, Item.Role);
+      Display(Sender, BoolToStr(Item.IsDefault, True));
+    end;
 end;
 
 { TVCLStabilitySender }

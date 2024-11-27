@@ -51,6 +51,8 @@ ___
 - [Video](#Video)
 - [Other Features of Version 1](#Other-Features-of-Version-1)
     - [Model list](#Model-list)
+    - [User account](#User account)
+    - [User balance](#User-balance)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -1174,10 +1176,12 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
 
 ## Model list
 
+List the engines compatible with `Version 1` REST API endpoints.
+
 ```Pascal
 //uses 
 //  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
-//  SStabilityAI.Version1.Engines;
+//  StabilityAI.Version1.Engines;
 
   Stability.Version1.Engines.List(
     function : TAsynEngines
@@ -1190,6 +1194,48 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
 ```
 
 Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Engines/operation/listEngines)
+
+<br/>
+
+## User account
+
+Retrieve details about the account linked to the specified API key
+
+```Pascal
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  StabilityAI.Version1.User;
+
+  Stability.Version1.User.AccountDetails(
+    function : TAsynAccountDetails
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/User/operation/userAccount)
+
+<br/>
+
+## User balance
+
+```Pascal
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  StabilityAI.Version1.User;
+
+  var Balance := Stability.Version1.User.AccountBalance;
+  try
+    Memo1.Lines.Text := Memo1.Text + Balance.Credits.ToString + sLineBreak;
+  finally
+    Balance.Free;
+  end;
+```
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/User/operation/userBalance)
 
 <br/>
 

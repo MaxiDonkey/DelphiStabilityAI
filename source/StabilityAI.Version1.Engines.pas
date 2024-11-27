@@ -126,6 +126,7 @@ type
     /// Each object in the array represents an individual engine with its respective metadata.
     /// </remarks>
     property Result: TArray<TEngine> read FResult write FResult;
+    destructor Destroy; override;
   end;
 
   /// <summary>
@@ -166,7 +167,7 @@ type
     ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
     ///   var Data := Stability.Version1.Engines.List;
     ///   try
-    ///     for var Itel in Data.Result do
+    ///     for var Item in Data.Result do
     ///       showMesage(Item.Name);
     ///   finally
     ///     Data.Free;
@@ -180,9 +181,6 @@ type
     /// NOTE: This method is <c>asynchronous</c>
     /// </para>
     /// </summary>
-    /// <param name="ParamProc">
-    /// A procedure used to configure the parameters for the image creation, such as image, the the format of the output image etc.
-    /// </param>
     /// <param name="CallBacks">
     /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
     /// </param>
@@ -286,6 +284,15 @@ end;
 function TEnginesRoute.List: TEngines;
 begin
   Result := API.GetArray<TEngines>('v1/engines/list');
+end;
+
+{ TEngines }
+
+destructor TEngines.Destroy;
+begin
+  for var Item in FResult do
+    Item.Free;
+  inherited;
 end;
 
 end.

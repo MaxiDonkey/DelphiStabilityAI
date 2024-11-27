@@ -117,11 +117,147 @@ type
   /// </remarks>
   TAsynAccountBalance = TAsynCallBack<TAccountBalance>;
 
+  /// <summary>
+  /// Provides methods to interact with user-related endpoints of the StabilityAI API.
+  /// </summary>
+  /// <remarks>
+  /// This class offers synchronous and asynchronous methods for retrieving account details
+  /// and account balance information associated with the provided API key. It is designed
+  /// for both blocking and non-blocking workflows, making it suitable for various application requirements.
+  /// </remarks>
   TUserRoute = class(TStabilityAIAPIRoute)
+    /// <summary>
+    /// Get information about the account associated with the provided API key
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <returns>
+    /// Returns a <c>TAccountDetails</c> object that contains account informations.
+    /// </returns>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Data := Stability.Version1.User.AccountDetails;
+    ///   try
+    ///     for var Itel in Data.Result do
+    ///       //display details account informations
+    ///   finally
+    ///     Data.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
     function AccountDetails: TAccountDetails; overload;
+    /// <summary>
+    /// Get information about the account associated with the provided API key
+    /// <para>
+    /// NOTE: This method is <c>asynchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.Version1.User.AccountDetails(
+    ///   function : TAsynAccountDetails
+    ///   begin
+    ///     Result.Sender := my_obj;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Data: TAccountDetails)
+    ///       begin
+    ///         // Handle success operation
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
     procedure AccountDetails(CallBacks: TFunc<TAsynAccountDetails>); overload;
-
+    /// <summary>
+    /// Get the credit balance of the account/organization associated with the API key
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <returns>
+    /// Returns a <c>TAccountBalance</c> object that contains balance information.
+    /// </returns>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Data := Stability.Version1.User.AccountBalance;
+    ///   try
+    ///     //display balanceinformation
+    ///   finally
+    ///     Data.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
     function AccountBalance: TAccountBalance; overload;
+    /// <summary>
+    /// Get the credit balance of the account/organization associated with the API key
+    /// <para>
+    /// NOTE: This method is <c>asynchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.Version1.User.AccountBalance(
+    ///   function : TAsynAccountBalance
+    ///   begin
+    ///     Result.Sender := my_obj;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Data: TAccountBalance)
+    ///       begin
+    ///         // Handle success operation
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
     procedure AccountBalance(CallBacks: TFunc<TAsynAccountBalance>); overload;
   end;
 
@@ -141,6 +277,11 @@ end;
 
 { TUserRoute }
 
+function TUserRoute.AccountBalance: TAccountBalance;
+begin
+  Result := API.Get<TAccountBalance>('v1/user/balance');
+end;
+
 procedure TUserRoute.AccountBalance(CallBacks: TFunc<TAsynAccountBalance>);
 begin
   with TAsynCallBackExec<TAsynAccountBalance, TAccountBalance>.Create(CallBacks) do
@@ -159,9 +300,9 @@ begin
   end;
 end;
 
-function TUserRoute.AccountBalance: TAccountBalance;
+function TUserRoute.AccountDetails: TAccountDetails;
 begin
-  Result := API.Get<TAccountBalance>('v1/user/balance');
+  Result := API.Get<TAccountDetails>('v1/user/account');
 end;
 
 procedure TUserRoute.AccountDetails(CallBacks: TFunc<TAsynAccountDetails>);
@@ -180,11 +321,6 @@ begin
   finally
     Free;
   end;
-end;
-
-function TUserRoute.AccountDetails: TAccountDetails;
-begin
-  Result := API.Get<TAccountDetails>('v1/user/account');
 end;
 
 end.
