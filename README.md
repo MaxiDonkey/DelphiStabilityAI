@@ -1090,6 +1090,8 @@ For using, see [Fetch async generation result](#Fetch-async-generation-result)
 
 Stable Fast 3D generates high-quality 3D assets from a single 2D input image.
 
+See the [GLB File Format](https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html#glb-file-format-specification) Specification for more details.
+
 ```Pascal
 //uses 
 //  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
