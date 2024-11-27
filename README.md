@@ -1242,9 +1242,9 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
 
 # New features announced
 
-**Stability AI** has announced two upcoming features:
+**Stability.ai** has announced two upcoming features:
 - Language generation with its models: `Stable LLM 12B` and `Stable LLM 1.6B`.
-- `Audio Stable 2.0`. You can contact Stability AI to test this model by [sending a message](https://stability.ai/contact).
+- `Audio Stable 2.0`. You can contact Stability.ai to test this model by [sending a message](https://stability.ai/contact).
 
 <br/>
 
