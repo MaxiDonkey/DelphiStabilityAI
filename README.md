@@ -53,6 +53,7 @@ ___
     - [Model list](#Model-list)
     - [User account](#User account)
     - [User balance](#User-balance)
+- [New features announced](#New-features-announced)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -1236,6 +1237,14 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
 ```
 
 Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/User/operation/userBalance)
+
+<br/>
+
+# New features announced
+
+**Stability AI** has announced two upcoming features:
+- Language generation with its models: `Stable LLM 12B` and `Stable LLM 1.6B`.
+- `Audio Stable 2.0`. You can contact Stability AI to test this model by [sending a message](https://stability.ai/contact).
 
 <br/>
 
