@@ -1123,6 +1123,49 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
 Use [**Stable Video Diffusion**](https://static1.squarespace.com/static/6213c340453c3f502425776e/t/655ce779b9d47d342a93c890/1700587395994/stable_video_diffusion.pdf), a latent video diffusion model, to generate a short video from an initial image.
 - After calling this endpoint with the required parameters, retrieve the `ID` from the response to check the results at the `image-to-video/result/{id}` endpoint. Be sure not to poll this endpoint more than once every 10 seconds to avoid errors or rate-limiting issues.
 
+```Pascal
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  StabilityAI.VideoAnd3D.Video;
+
+  Stability.VideoAnd3D.ImageToVideo.Generation(
+    procedure (Params: TVideo)
+    begin
+      Params.Image('lighthouse1024x576.png');
+    end,
+    function : TAsynJobVideo
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+At the end, we retrieve the ID (*e.g. d4fb4aa8301aee0b368a41b3c0a78018dfc28f1f959a3666be2e6951408fb8e3*) of the video creation task. Then, we simply retrieve the result in this way.
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Image-to-Video/paths/~1v2beta~1image-to-video/post)
+
+```Pascal
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  StabilityAI.VideoAnd3D.Video;
+
+  var Id := 'd4fb4aa8301aee0b368a41b3c0a78018dfc28f1f959a3666be2e6951408fb8e3';
+  StabilityResult.FileName := 'lighthouse1024x576.mp4';
+
+  Stability.VideoAnd3D.ImageToVideo.Fetch(Id,
+    function : TAsynResults
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Image-to-Video/paths/~1v2beta~1image-to-video~1result~1%7Bid%7D/get)
+
 <br/>
 
 # Contributing
