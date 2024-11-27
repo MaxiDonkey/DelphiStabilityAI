@@ -49,6 +49,8 @@ ___
 - [Results](#Results)
 - [3D](#3D)
 - [Video](#Video)
+- [Other Features of Version 1](#Other-Features-of-Version-1)
+    - [Model list](#Model-list)
 - [Contributing](#contributing)
 - [License](#license)
  
@@ -1165,6 +1167,29 @@ Detailed settings on the [official documentation](https://platform.stability.ai/
 ```
 
 Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Image-to-Video/paths/~1v2beta~1image-to-video~1result~1%7Bid%7D/get)
+
+<br/>
+
+# Other Features of Version 1
+
+## Model list
+
+```Pascal
+//uses 
+//  StabilityAI, StabilityAI.Types, StabilityAI.Common, FMX.Stability.Tutorial,
+//  SStabilityAI.Version1.Engines;
+
+  Stability.Version1.Engines.List(
+    function : TAsynEngines
+    begin
+      Result.Sender := StabilityResult;
+      Result.OnStart := Start;
+      Result.OnSuccess := Display;
+      Result.OnError := Display;
+    end);
+```
+
+Detailed settings on the [official documentation](https://platform.stability.ai/docs/api-reference#tag/Engines/operation/listEngines)
 
 <br/>
 

@@ -15,7 +15,7 @@ interface
 uses
   System.SysUtils, System.Classes, System.Types, FMX.Memo, FMX.Objects, FMX.Forms,
   StabilityAI.Common, StabilityAI.Version1.SDXL1AndSD1_6, StabilityAI.VideoAnd3D.Stable3D,
-  StabilityAI.VideoAnd3D.Video;
+  StabilityAI.VideoAnd3D.Video, StabilityAI.Version1.Engines;
 
 type
   TFMXStabilitySender = class
@@ -39,6 +39,7 @@ type
   procedure Display(Sender: TObject; Value: TResults); overload;
   procedure Display(Sender: TObject; Value: TModel3D); overload;
   procedure Display(Sender: TObject; Value: TJobVideo); overload;
+  procedure Display(Sender: TObject; Value: TEngines); overload;
 
 var
   StabilityResult: TFMXStabilitySender = nil;
@@ -47,7 +48,7 @@ implementation
 
 procedure Start(Sender: TObject);
 begin
-  Display(Sender, 'The generation has started. Please wait...');
+  Display(Sender, 'Request dended. Please wait....');
 end;
 
 procedure Display(Sender: TObject; Value: string);
@@ -67,7 +68,7 @@ begin
     {--- Display only images }
     if not Result.Image.IsEmpty then
       T.Image.Bitmap.LoadFromStream(Stream);
-    Display(Sender, 'Generation ended successfully');
+    Display(Sender, 'Operation ended successfully');
   finally
     Stream.Free;
   end;
@@ -81,7 +82,7 @@ begin
     if not T.FileName.IsEmpty then
       Result.SaveToFile(T.FileName);
     T.Image. BitMap.LoadFromStream(Stream);
-    Display(Sender, 'Generation ended successfully');
+    Display(Sender, 'Operation ended successfully');
   finally
     Stream.Free;
   end;
@@ -117,6 +118,12 @@ end;
 procedure Display(Sender: TObject; Value: TJobVideo);
 begin
   Display(Sender, Value.Id);
+end;
+
+procedure Display(Sender: TObject; Value: TEngines);
+begin
+  for var Item in Value.Result do
+    Display(Sender, Item.Name);
 end;
 
 { TFMXStabilitySender }

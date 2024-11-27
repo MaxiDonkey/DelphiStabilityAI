@@ -138,8 +138,83 @@ type
   /// </remarks>
   TAsynEngines = TAsynCallBack<TEngines>;
 
+  /// <summary>
+  /// Represents the API route for managing StabilityAI engines.
+  /// </summary>
+  /// <remarks>
+  /// The <c>TEnginesRoute</c> class provides methods for retrieving a list of engines available to the user or organization.
+  /// It supports both synchronous and asynchronous operations to cater to different usage scenarios.
+  /// </remarks>
   TEnginesRoute = class(TStabilityAIAPIRoute)
+    /// <summary>
+    /// List all engines available to your organization/user
+    /// <para>
+    /// NOTE: This method is <c>synchronous</c>
+    /// </para>
+    /// </summary>
+    /// <returns>
+    /// Returns a <c>TEngines</c> object that contains model informations.
+    /// </returns>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    ///   var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    ///   var Data := Stability.Version1.Engines.List;
+    ///   try
+    ///     for var Itel in Data.Result do
+    ///       showMesage(Item.Name);
+    ///   finally
+    ///     Data.Free;
+    ///   end;
+    /// </code>
+    /// </remarks>
     function List: TEngines; overload;
+    /// <summary>
+    /// List all engines available to your organization/user
+    /// <para>
+    /// NOTE: This method is <c>asynchronous</c>
+    /// </para>
+    /// </summary>
+    /// <param name="ParamProc">
+    /// A procedure used to configure the parameters for the image creation, such as image, the the format of the output image etc.
+    /// </param>
+    /// <param name="CallBacks">
+    /// A function that returns a record containing event handlers for asynchronous image creation, such as <c>onSuccess</c> and <c>onError</c>.
+    /// </param>
+    /// <exception cref="StabilityAIException">
+    /// Thrown when there is an error in the communication with the API or other underlying issues in the API call.
+    /// </exception>
+    /// <exception cref="StabilityAIExceptionBadRequestError">
+    /// Thrown when the request is invalid, such as when required parameters are missing or values exceed allowed limits.
+    /// </exception>
+    /// <remarks>
+    /// <code>
+    /// // WARNING - Move the following line to the main OnCreate method for maximum scope.
+    /// // var Stability := TStabilityAIFactory.CreateInstance(BaererKey);
+    /// Stability.Version1.Engines.List(
+    ///   function : TAsynEngines
+    ///   begin
+    ///     Result.Sender := my_obj;  // Instance passed to callback parameter
+    ///
+    ///     Result.OnStart := nil;   // If nil then; Can be omitted
+    ///
+    ///     Result.OnSuccess := procedure (Sender: TObject; Data: TEngines)
+    ///       begin
+    ///         // Handle success operation
+    ///       end;
+    ///
+    ///     Result.OnError := procedure (Sender: TObject; Error: string)
+    ///       begin
+    ///         // Handle error message
+    ///       end;
+    ///   end);
+    /// </code>
+    /// </remarks>
     procedure List(CallBacks: TFunc<TAsynEngines>); overload;
   end;
 
