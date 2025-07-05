@@ -240,6 +240,13 @@ type
     /// </param>
     function SelectPrompt(const Value: string): TSearchAndReplace;
     /// <summary>
+    /// Short description of what to inpaint in the image.
+    /// </summary>
+    /// <param name="Value">
+    /// string [1 .. 10000] characters
+    /// </param>
+    function SearchPrompt(const Value: string): TSearchAndReplace;
+    /// <summary>
     /// A blurb of text describing what you do not wish to see in the output image.
     /// </summary>
     /// <param name="Value">
@@ -1556,6 +1563,12 @@ function TSearchAndReplace.NegativePrompt(
   const Value: string): TSearchAndReplace;
 begin
   AddField(Check('negative_prompt', Value), Value);
+  Result := Self;
+end;
+
+function TSearchAndReplace.SearchPrompt(const Value: string): TSearchAndReplace;
+begin
+  AddField(Check('search_prompt', Value), Value);
   Result := Self;
 end;
 
